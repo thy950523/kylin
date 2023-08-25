@@ -3817,7 +3817,7 @@
                         </executions>
                         <configuration>
                             <algorithms>
-                                <algorithm>SHA-256</algorithm>
+                                <algorithm>SHA-512</algorithm>
                             </algorithms>
                             <failOnError>false</failOnError>
                         </configuration>
