@@ -180,13 +180,13 @@ public class DefaultExecutableOnModel extends DefaultExecutable {
         if (resourceDetect != null) {
             val indexStepId = indexStep.getId();
             indexStep.setPreviousStep(resourceDetect.getId());
-            if (secondStorage != null) {
-                val secondStorageId = secondStorage.getId();
-                resourceDetect.setNextSteps(Sets.newHashSet(indexStepId, secondStorageId));
-                secondStorage.setPreviousStep(resourceDetect.getId());
-            } else {
+//            if (secondStorage != null) {
+//                val secondStorageId = secondStorage.getId();
+//                resourceDetect.setNextSteps(Sets.newHashSet(indexStepId, secondStorageId));
+//                secondStorage.setPreviousStep(resourceDetect.getId());
+//            } else {
                 resourceDetect.setNextSteps(Sets.newHashSet(indexStepId));
-            }
+//            }
         }
     }
 

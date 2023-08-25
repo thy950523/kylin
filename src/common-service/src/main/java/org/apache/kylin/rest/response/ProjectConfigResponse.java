@@ -27,7 +27,7 @@ import org.apache.kylin.metadata.model.VolatileRange;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import io.kyligence.kap.secondstorage.response.SecondStorageNode;
+//import io.kyligence.kap.secondstorage.response.SecondStorageNode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -70,8 +70,8 @@ public class ProjectConfigResponse {
 
     @JsonProperty("second_storage_enabled")
     private Boolean secondStorageEnabled;
-    @JsonProperty("second_storage_nodes")
-    private List<SecondStorageNode> secondStorageNodes;
+//    @JsonProperty("second_storage_nodes")
+//    private List<SecondStorageNode> secondStorageNodes;
     @JsonProperty("runner_class_name")
     private String runnerClassName;
     @JsonProperty("converter_class_names")

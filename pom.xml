@@ -394,10 +394,10 @@
         <module>src/tool</module>
         <module>src/datasource-sdk</module>
         <module>src/streaming-sdk</module>
-        <module>src/second-storage/core</module>
-        <module>src/second-storage/core-ui</module>
-        <module>src/second-storage/clickhouse</module>
-        <module>src/second-storage/clickhouse-it</module>
+<!--        <module>src/second-storage/core</module>-->
+<!--        <module>src/second-storage/core-ui</module>-->
+<!--        <module>src/second-storage/clickhouse</module>-->
+<!--        <module>src/second-storage/clickhouse-it</module>-->
         <module>src/modeling-service</module>
         <module>src/query-service</module>
         <module>src/datasource-service</module>
@@ -495,21 +495,21 @@
                 <version>${project.version}</version>
             </dependency>
             <!-- second storage -->
-            <dependency>
-                <groupId>org.apache.kylin</groupId>
-                <artifactId>kap-second-storage-clickhouse</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.kylin</groupId>
-                <artifactId>kap-second-storage-core</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.kylin</groupId>
-                <artifactId>kap-second-storage-ui</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.apache.kylin</groupId>-->
+<!--                <artifactId>kap-second-storage-clickhouse</artifactId>-->
+<!--                <version>${project.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.apache.kylin</groupId>-->
+<!--                <artifactId>kap-second-storage-core</artifactId>-->
+<!--                <version>${project.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.apache.kylin</groupId>-->
+<!--                <artifactId>kap-second-storage-ui</artifactId>-->
+<!--                <version>${project.version}</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>org.apache.kylin</groupId>
                 <artifactId>kylin-common-service</artifactId>
@@ -788,12 +788,12 @@
                 <version>${project.version}</version>
                 <type>test-jar</type>
             </dependency>
-            <dependency>
-                <groupId>org.apache.kylin</groupId>
-                <artifactId>kap-second-storage-clickhouse</artifactId>
-                <version>${project.version}</version>
-                <type>test-jar</type>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.apache.kylin</groupId>-->
+<!--                <artifactId>kap-second-storage-clickhouse</artifactId>-->
+<!--                <version>${project.version}</version>-->
+<!--                <type>test-jar</type>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>org.apache.kylin</groupId>
                 <artifactId>kylin-core-metadata</artifactId>

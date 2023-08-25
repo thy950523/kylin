@@ -20,7 +20,7 @@ package org.apache.spark.sql
 
 import java.sql.Timestamp
 
-import io.kyligence.kap.secondstorage.SecondStorage
+//import io.kyligence.kap.secondstorage.SecondStorage
 import org.apache.kylin.common.KylinConfig
 import org.apache.kylin.metadata.cube.model.{LayoutEntity, NDataflow, NDataflowManager}
 import org.apache.kylin.metadata.model.FusionModelManager
@@ -96,10 +96,10 @@ class KylinDataFrameManager(sparkSession: SparkSession) {
   }
 
   def read(dataflow: NDataflow, layout: LayoutEntity, pruningInfo: String): DataFrame = {
-    SecondStorage.trySecondStorage(sparkSession, dataflow, layout, pruningInfo).getOrElse {
+//    SecondStorage.trySecondStorage(sparkSession, dataflow, layout, pruningInfo).getOrElse {
       StorageStoreFactory.create(dataflow.getModel.getStorageType)
         .read(dataflow, layout, sparkSession, extraOptions.toMap)
-    }
+//    }
   }
 
   /**

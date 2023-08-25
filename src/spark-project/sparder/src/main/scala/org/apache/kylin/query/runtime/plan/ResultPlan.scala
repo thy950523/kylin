@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets
 import java.util.concurrent.atomic.AtomicLong
 import java.{lang, util}
 
-import io.kyligence.kap.secondstorage.SecondStorageUtil
+//import io.kyligence.kap.secondstorage.SecondStorageUtil
 import org.apache.calcite.rel.`type`.{RelDataType, RelDataTypeField}
 import org.apache.commons.io.IOUtils
 import org.apache.hadoop.fs.Path
@@ -134,12 +134,12 @@ object ResultPlan extends LogEx {
       QueryContext.current().getMetrics.setQueryStageCount(stageCount)
       QueryContext.current().getMetrics.setQueryTaskCount(taskCount)
 
-      if (!QueryContext.current().getSecondStorageUsageMap.isEmpty &&
-        KylinConfig.getInstanceFromEnv.getSecondStorageQueryMetricCollect) {
-        val executedPlan = SecondStorageUtil.collectExecutedPlan(getNormalizedExplain(df))
-        val pushedPlan = SecondStorageUtil.convertExecutedPlan(executedPlan, QueryContext.current.getProject, OLAPContext.getNativeRealizations)
-        QueryContext.current().getMetrics.setQueryExecutedPlan(pushedPlan)
-      }
+//      if (!QueryContext.current().getSecondStorageUsageMap.isEmpty &&
+//        KylinConfig.getInstanceFromEnv.getSecondStorageQueryMetricCollect) {
+//        val executedPlan = SecondStorageUtil.collectExecutedPlan(getNormalizedExplain(df))
+//        val pushedPlan = SecondStorageUtil.convertExecutedPlan(executedPlan, QueryContext.current.getProject, OLAPContext.getNativeRealizations)
+//        QueryContext.current().getMetrics.setQueryExecutedPlan(pushedPlan)
+//      }
 
       logInfo(s"Actual total scan count: $scanRows, " +
         s"file scan row count: ${QueryContext.current.getMetrics.getAccumSourceScanRows}, " +

@@ -604,7 +604,7 @@ public abstract class AbstractInfoExtractorTool extends ExecutableApplication {
     protected void exportTieredStorage(String project, File exportDir, long startTime, long endTime, File recordTime) {
         Future kgLogTask = executorService.submit(() -> {
             recordTaskStartTime(TIERED_STORAGE_LOGS);
-            new ClickhouseDiagTool(project).dumpClickHouseServerLog(exportDir, startTime, endTime);
+//            new ClickhouseDiagTool(project).dumpClickHouseServerLog(exportDir, startTime, endTime);
             recordTaskExecutorTimeToFile(TIERED_STORAGE_LOGS, recordTime);
         });
 

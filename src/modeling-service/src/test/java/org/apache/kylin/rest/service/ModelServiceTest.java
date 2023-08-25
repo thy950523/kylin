@@ -20,7 +20,7 @@ package org.apache.kylin.rest.service;
 
 import static org.apache.kylin.common.exception.ServerErrorCode.FAILED_EXECUTE_MODEL_SQL;
 import static org.apache.kylin.common.exception.ServerErrorCode.INVALID_PARTITION_COLUMN;
-import static org.apache.kylin.common.exception.ServerErrorCode.PERMISSION_DENIED;
+//import static org.apache.kylin.common.exception.ServerErrorCode.PERMISSION_DENIED;
 import static org.apache.kylin.common.exception.code.ErrorCodeServer.COMPUTED_COLUMN_CONFLICT;
 import static org.apache.kylin.common.exception.code.ErrorCodeServer.COMPUTED_COLUMN_CONFLICT_ADJUST_INFO;
 import static org.apache.kylin.common.exception.code.ErrorCodeServer.COMPUTED_COLUMN_EXPR_CONFLICT;
@@ -218,11 +218,11 @@ import org.apache.kylin.guava30.shaded.common.collect.Maps;
 import org.apache.kylin.guava30.shaded.common.collect.Sets;
 import org.apache.kylin.guava30.shaded.common.primitives.Longs;
 
-import io.kyligence.kap.clickhouse.MockSecondStorage;
-import io.kyligence.kap.secondstorage.SecondStorageNodeHelper;
-import io.kyligence.kap.secondstorage.SecondStorageUtil;
-import io.kyligence.kap.secondstorage.config.Node;
-import io.kyligence.kap.secondstorage.metadata.NodeGroup;
+//import io.kyligence.kap.clickhouse.MockSecondStorage;
+//import io.kyligence.kap.secondstorage.SecondStorageNodeHelper;
+//import io.kyligence.kap.secondstorage.SecondStorageUtil;
+//import io.kyligence.kap.secondstorage.config.Node;
+//import io.kyligence.kap.secondstorage.metadata.NodeGroup;
 import lombok.val;
 import lombok.var;
 import lombok.extern.slf4j.Slf4j;
@@ -3939,7 +3939,7 @@ public class ModelServiceTest extends SourceTestCase {
                 null);
         Assert.assertEquals(1, overlapSegments8.size());
 
-        MockSecondStorage.mock(defaultProject, new ArrayList<>(), this);
+//        MockSecondStorage.mock(defaultProject, new ArrayList<>(), this);
         val indexPlanManager = NIndexPlanManager.getInstance(KylinConfig.getInstanceFromEnv(), defaultProject);
         EnhancedUnitOfWork.doInTransactionWithCheckAndRetry(() -> {
             indexPlanManager.updateIndexPlan(modelId, indexPlan -> {
@@ -3947,8 +3947,8 @@ public class ModelServiceTest extends SourceTestCase {
             });
             return null;
         }, defaultProject);
-        SecondStorageUtil.initModelMetaData(defaultProject, modelId);
-        Assert.assertTrue(SecondStorageUtil.isModelEnable(defaultProject, modelId));
+//        SecondStorageUtil.initModelMetaData(defaultProject, modelId);
+//        Assert.assertTrue(SecondStorageUtil.isModelEnable(defaultProject, modelId));
         List<NDataSegment> overlapSegments31 = modelService.checkSegmentToBuildOverlapsBuilt(defaultProject,
                 dataModelDesc, new SegmentRange.TimePartitionedSegmentRange(1309891513770L, 1509891513770L), true,
                 null);
@@ -4274,13 +4274,13 @@ public class ModelServiceTest extends SourceTestCase {
     public void testConvertToRequestWithSecondStorage() throws IOException {
         val model = "741ca86a-1f13-46da-a59f-95fb68615e3a";
         val project = "default";
-        MockSecondStorage.mock("default", new ArrayList<>(), this);
+//        MockSecondStorage.mock("default", new ArrayList<>(), this);
         val indexPlanManager = NIndexPlanManager.getInstance(KylinConfig.getInstanceFromEnv(), "default");
         EnhancedUnitOfWork.doInTransactionWithCheckAndRetry(() -> {
             indexPlanManager.updateIndexPlan(model, indexPlan -> indexPlan.createAndAddBaseIndex(indexPlan.getModel()));
             return null;
         }, project);
-        SecondStorageUtil.initModelMetaData("default", model);
+//        SecondStorageUtil.initModelMetaData("default", model);
         Assert.assertTrue(indexPlanManager.getIndexPlan(model).containBaseTableLayout());
         ModelRequest request = new ModelRequest();
         request.setWithSecondStorage(true);
@@ -4290,7 +4290,7 @@ public class ModelServiceTest extends SourceTestCase {
 
         when(changedResponse.hasTableIndexChange()).thenReturn(true);
         modelService.changeSecondStorageIfNeeded(project, request, () -> true);
-        Assert.assertTrue(SecondStorageUtil.isModelEnable(project, model));
+//        Assert.assertTrue(SecondStorageUtil.isModelEnable(project, model));
 
         val modelRequest = modelService.convertToRequest(modelService.getModelById(model, project));
         Assert.assertTrue(modelRequest.isWithSecondStorage());
@@ -4300,15 +4300,15 @@ public class ModelServiceTest extends SourceTestCase {
     public void testAddSecondStorageDisplayStatus() throws IOException {
         val model = "acfde546-2cc9-4eec-bc92-e3bd46d4e2ee";
         val project = "table_index";
-        MockSecondStorage.mock(project, new ArrayList<>(), this);
+//        MockSecondStorage.mock(project, new ArrayList<>(), this);
         val indexPlanManager = NIndexPlanManager.getInstance(KylinConfig.getInstanceFromEnv(), project);
         EnhancedUnitOfWork.doInTransactionWithCheckAndRetry(() -> {
             indexPlanManager.updateIndexPlan(model, indexPlan -> indexPlan.createAndAddBaseIndex(indexPlan.getModel()));
             return null;
         }, project);
         Assert.assertTrue(indexPlanManager.getIndexPlan(model).containBaseTableLayout());
-        SecondStorageUtil.initModelMetaData(project, model);
-        Assert.assertTrue(SecondStorageUtil.isModelEnable(project, model));
+//        SecondStorageUtil.initModelMetaData(project, model);
+//        Assert.assertTrue(SecondStorageUtil.isModelEnable(project, model));
         {
             List<NDataSegmentResponse> segments = modelService.getSegmentsResponse(model, project, "0",
                     "" + Long.MAX_VALUE, "", null, null, true, "start_time", false, null, null);
@@ -4358,14 +4358,14 @@ public class ModelServiceTest extends SourceTestCase {
     public void testAddSecondStorageDisplayStatusWithCHDisable() throws IOException {
         val model = "acfde546-2cc9-4eec-bc92-e3bd46d4e2ee";
         val project = "table_index";
-        MockSecondStorage.mock(project, new ArrayList<>(), this);
+//        MockSecondStorage.mock(project, new ArrayList<>(), this);
         val indexPlanManager = NIndexPlanManager.getInstance(KylinConfig.getInstanceFromEnv(), project);
         EnhancedUnitOfWork.doInTransactionWithCheckAndRetry(() -> {
             indexPlanManager.updateIndexPlan(model, indexPlan -> indexPlan.createAndAddBaseIndex(indexPlan.getModel()));
             return null;
         }, project);
         Assert.assertTrue(indexPlanManager.getIndexPlan(model).containBaseTableLayout());
-        Assert.assertFalse(SecondStorageUtil.isModelEnable(project, model));
+//        Assert.assertFalse(SecondStorageUtil.isModelEnable(project, model));
         {
             List<NDataSegmentResponse> segments = modelService.getSegmentsResponse(model, project, "0",
                     "" + Long.MAX_VALUE, "", null, null, true, "start_time", false,
@@ -4961,45 +4961,45 @@ public class ModelServiceTest extends SourceTestCase {
         Assert.assertEquals("SUM_L", okModel.getAllMeasures().get(1).getName());
     }
 
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testListNodesByProject() throws IOException {
-        val project = "default";
-        MockSecondStorage.mock(project, new ArrayList<>(), this);
-        val nodeGroupManagerOption = SecondStorageUtil.nodeGroupManager(KylinConfig.getInstanceFromEnv(), project);
+//    @Test
+//    @SuppressWarnings("unchecked")
+//    public void testListNodesByProject() throws IOException {
+//        val project = "default";
+//        MockSecondStorage.mock(project, new ArrayList<>(), this);
+//        val nodeGroupManagerOption = SecondStorageUtil.nodeGroupManager(KylinConfig.getInstanceFromEnv(), project);
+//
+//        Assert.assertTrue(nodeGroupManagerOption.isPresent());
+//        val nodeGroupManager = nodeGroupManagerOption.get();
+//
+//        NodeGroup nodeGroup1 = new NodeGroup();
+//        nodeGroup1.setNodeNames(Lists.newArrayList("node01", "node02"));
+//        NodeGroup nodeGroup2 = new NodeGroup();
+//        nodeGroup2.setNodeNames(Lists.newArrayList("node01"));
+//        EnhancedUnitOfWork.doInTransactionWithCheckAndRetry(() -> {
+//            nodeGroupManager.createAS(nodeGroup1);
+//            return null;
+//        }, project);
+//
+//        val mockNodeMap = (Map<String, Node>) (ReflectionTestUtils.getField(SecondStorageNodeHelper.class, "NODE_MAP"));
+//        mockNodeMap.put("node01", new Node().setName("node01").setIp("127.0.0.1").setPort(9000));
+//        mockNodeMap.put("node02", new Node().setName("node02").setIp("127.0.0.2").setPort(9000));
+//        mockNodeMap.put("node03", new Node().setName("node03").setIp("127.0.0.3").setPort(9000));
+//
+//        Assert.assertEquals(2, SecondStorageNodeHelper.getALlNodesInProject(project).size());
+//        Assert.assertEquals(3, SecondStorageNodeHelper.getALlNodes().size());
+//    }
 
-        Assert.assertTrue(nodeGroupManagerOption.isPresent());
-        val nodeGroupManager = nodeGroupManagerOption.get();
-
-        NodeGroup nodeGroup1 = new NodeGroup();
-        nodeGroup1.setNodeNames(Lists.newArrayList("node01", "node02"));
-        NodeGroup nodeGroup2 = new NodeGroup();
-        nodeGroup2.setNodeNames(Lists.newArrayList("node01"));
-        EnhancedUnitOfWork.doInTransactionWithCheckAndRetry(() -> {
-            nodeGroupManager.createAS(nodeGroup1);
-            return null;
-        }, project);
-
-        val mockNodeMap = (Map<String, Node>) (ReflectionTestUtils.getField(SecondStorageNodeHelper.class, "NODE_MAP"));
-        mockNodeMap.put("node01", new Node().setName("node01").setIp("127.0.0.1").setPort(9000));
-        mockNodeMap.put("node02", new Node().setName("node02").setIp("127.0.0.2").setPort(9000));
-        mockNodeMap.put("node03", new Node().setName("node03").setIp("127.0.0.3").setPort(9000));
-
-        Assert.assertEquals(2, SecondStorageNodeHelper.getALlNodesInProject(project).size());
-        Assert.assertEquals(3, SecondStorageNodeHelper.getALlNodes().size());
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testAllListNodes() throws IOException {
-        MockSecondStorage.mock("default", new ArrayList<>(), this);
-
-        val mockNodeMap = (Map<String, Node>) (ReflectionTestUtils.getField(SecondStorageNodeHelper.class, "NODE_MAP"));
-        mockNodeMap.put("node01", new Node().setName("node01").setIp("127.0.0.1").setPort(9000));
-        mockNodeMap.put("node02", new Node().setName("node02").setIp("127.0.0.2").setPort(9000));
-        mockNodeMap.put("node03", new Node().setName("node03").setIp("127.0.0.3").setPort(9000));
-        Assert.assertEquals(3, SecondStorageNodeHelper.getALlNodes().size());
-    }
+//    @Test
+//    @SuppressWarnings("unchecked")
+//    public void testAllListNodes() throws IOException {
+//        MockSecondStorage.mock("default", new ArrayList<>(), this);
+//
+//        val mockNodeMap = (Map<String, Node>) (ReflectionTestUtils.getField(SecondStorageNodeHelper.class, "NODE_MAP"));
+//        mockNodeMap.put("node01", new Node().setName("node01").setIp("127.0.0.1").setPort(9000));
+//        mockNodeMap.put("node02", new Node().setName("node02").setIp("127.0.0.2").setPort(9000));
+//        mockNodeMap.put("node03", new Node().setName("node03").setIp("127.0.0.3").setPort(9000));
+//        Assert.assertEquals(3, SecondStorageNodeHelper.getALlNodes().size());
+//    }
 
     @Test
     public void testAddBaseIndex() {
@@ -5251,41 +5251,41 @@ public class ModelServiceTest extends SourceTestCase {
         modelService.validatePartitionDesc(partitionDesc);
     }
 
-    @Test
-    public void testCheckSegmentSecondStorage() throws IOException {
-        val model = "89af4ee2-2cdb-4b07-b39e-4c29856309aa";
-        val project = "default";
-        MockSecondStorage.mock("default", new ArrayList<>(), this);
-        val indexPlanManager = NIndexPlanManager.getInstance(KylinConfig.getInstanceFromEnv(), "default");
-        EnhancedUnitOfWork.doInTransactionWithCheckAndRetry(() -> {
-            indexPlanManager.updateIndexPlan(model, indexPlan -> indexPlan.createAndAddBaseIndex(indexPlan.getModel()));
-            return null;
-        }, project);
-        SecondStorageUtil.initModelMetaData(project, model);
-        Assert.assertTrue(SecondStorageUtil.isModelEnable(project, model));
-
-        val mockModel = RandomUtil.randomUUIDStr();
-        Assert.assertFalse(SecondStorageUtil.isModelEnable(project, mockModel));
-
-        val segment = Mockito.mock(NDataSegment.class);
-        modelService.checkSegmentSecondStorage(mockModel, project, segment);
-        try {
-            Mockito.when(segment.getLayoutsMap()).thenReturn(Maps.newHashMap());
-            modelService.checkSegmentSecondStorage(model, project, segment);
-            Assert.fail();
-        } catch (Exception e) {
-            Assert.assertTrue(e instanceof KylinException);
-            Assert.assertEquals(PERMISSION_DENIED.toErrorCode().getCodeString(),
-                    ((KylinException) e).getErrorCode().getCodeString());
-            Assert.assertEquals(MsgPicker.getMsg().getInvalidMergeSegmentWithoutDFS(), e.getMessage());
-        }
-
-        val layoutsMap = Maps.<Long, NDataLayout> newHashMap();
-        val layout = Mockito.mock(NDataLayout.class);
-        layoutsMap.put(0L, layout);
-        Mockito.when(segment.getLayoutsMap()).thenReturn(layoutsMap);
-        modelService.checkSegmentSecondStorage(model, project, segment);
-    }
+//    @Test
+//    public void testCheckSegmentSecondStorage() throws IOException {
+//        val model = "89af4ee2-2cdb-4b07-b39e-4c29856309aa";
+//        val project = "default";
+//        MockSecondStorage.mock("default", new ArrayList<>(), this);
+//        val indexPlanManager = NIndexPlanManager.getInstance(KylinConfig.getInstanceFromEnv(), "default");
+//        EnhancedUnitOfWork.doInTransactionWithCheckAndRetry(() -> {
+//            indexPlanManager.updateIndexPlan(model, indexPlan -> indexPlan.createAndAddBaseIndex(indexPlan.getModel()));
+//            return null;
+//        }, project);
+//        SecondStorageUtil.initModelMetaData(project, model);
+//        Assert.assertTrue(SecondStorageUtil.isModelEnable(project, model));
+//
+//        val mockModel = RandomUtil.randomUUIDStr();
+//        Assert.assertFalse(SecondStorageUtil.isModelEnable(project, mockModel));
+//
+//        val segment = Mockito.mock(NDataSegment.class);
+//        modelService.checkSegmentSecondStorage(mockModel, project, segment);
+//        try {
+//            Mockito.when(segment.getLayoutsMap()).thenReturn(Maps.newHashMap());
+//            modelService.checkSegmentSecondStorage(model, project, segment);
+//            Assert.fail();
+//        } catch (Exception e) {
+//            Assert.assertTrue(e instanceof KylinException);
+//            Assert.assertEquals(PERMISSION_DENIED.toErrorCode().getCodeString(),
+//                    ((KylinException) e).getErrorCode().getCodeString());
+//            Assert.assertEquals(MsgPicker.getMsg().getInvalidMergeSegmentWithoutDFS(), e.getMessage());
+//        }
+//
+//        val layoutsMap = Maps.<Long, NDataLayout> newHashMap();
+//        val layout = Mockito.mock(NDataLayout.class);
+//        layoutsMap.put(0L, layout);
+//        Mockito.when(segment.getLayoutsMap()).thenReturn(layoutsMap);
+//        modelService.checkSegmentSecondStorage(model, project, segment);
+//    }
 
     @Test
     public void testCheckSegmentStatus() {

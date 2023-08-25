@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections.CollectionUtils;
+//import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.kylin.common.QueryContext;
 import org.apache.kylin.guava30.shaded.common.collect.Maps;
@@ -37,7 +37,7 @@ import org.apache.kylin.metadata.realization.QueryableSeg;
 import org.apache.kylin.query.relnode.OLAPContext;
 import org.apache.kylin.query.relnode.OLAPContextProp;
 
-import io.kyligence.kap.secondstorage.SecondStorageUtil;
+//import io.kyligence.kap.secondstorage.SecondStorageUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -78,23 +78,23 @@ public class Candidate {
             queryableSeg.setStreamingSegments(prunedSegments);
         } else {
             queryableSeg.setBatchSegments(prunedSegments);
-            fillSecondStorageLayouts(df);
+//            fillSecondStorageLayouts(df);
         }
     }
 
-    private void fillSecondStorageLayouts(NDataflow df) {
-        Map<String, Set<Long>> secondStorageSegmentLayoutMap = Maps.newHashMap();
-        if (SecondStorageUtil.isModelEnable(df.getProject(), df.getId())) {
-            for (NDataSegment segment : queryableSeg.getBatchSegments()) {
-                Set<Long> chEnableLayoutIds = SecondStorageUtil.listEnableLayoutBySegment(df.getProject(), df.getId(),
-                        segment.getId());
-                if (CollectionUtils.isNotEmpty(chEnableLayoutIds)) {
-                    secondStorageSegmentLayoutMap.put(segment.getId(), chEnableLayoutIds);
-                }
-            }
-        }
-        queryableSeg.setChSegToLayoutsMap(secondStorageSegmentLayoutMap);
-    }
+//    private void fillSecondStorageLayouts(NDataflow df) {
+//        Map<String, Set<Long>> secondStorageSegmentLayoutMap = Maps.newHashMap();
+//        if (SecondStorageUtil.isModelEnable(df.getProject(), df.getId())) {
+//            for (NDataSegment segment : queryableSeg.getBatchSegments()) {
+//                Set<Long> chEnableLayoutIds = SecondStorageUtil.listEnableLayoutBySegment(df.getProject(), df.getId(),
+//                        segment.getId());
+//                if (CollectionUtils.isNotEmpty(chEnableLayoutIds)) {
+//                    secondStorageSegmentLayoutMap.put(segment.getId(), chEnableLayoutIds);
+//                }
+//            }
+//        }
+//        queryableSeg.setChSegToLayoutsMap(secondStorageSegmentLayoutMap);
+//    }
 
     public Candidate(IRealization realization, OLAPContext ctx, Map<String, String> matchedJoinsGraphAliasMap) {
         this.realization = realization;

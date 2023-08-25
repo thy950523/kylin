@@ -98,7 +98,7 @@ import org.apache.kylin.guava30.shaded.common.collect.Lists;
 import org.apache.kylin.guava30.shaded.common.collect.Maps;
 import org.apache.kylin.guava30.shaded.common.collect.Sets;
 
-import io.kyligence.kap.clickhouse.MockSecondStorage;
+//import io.kyligence.kap.clickhouse.MockSecondStorage;
 import lombok.val;
 import lombok.var;
 import lombok.extern.slf4j.Slf4j;
@@ -991,7 +991,7 @@ public class ProjectServiceTest extends NLocalFileMetadataTestCase {
     @Test(expected = KylinException.class)
     public void testDropProjectFailed() throws IOException {
         val project = "default";
-        MockSecondStorage.mock(project, new ArrayList<>(), this);
+//        MockSecondStorage.mock(project, new ArrayList<>(), this);
         projectService.dropProject(project);
     }
 

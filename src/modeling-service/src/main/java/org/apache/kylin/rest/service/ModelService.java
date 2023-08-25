@@ -102,10 +102,10 @@ import org.apache.calcite.sql.util.SqlBasicVisitor;
 import org.apache.calcite.sql.util.SqlVisitor;
 import org.apache.calcite.util.Util;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.MapUtils;
+//import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.kylin.common.KapConfig;
+//import org.apache.kylin.common.KapConfig;
 import org.apache.kylin.common.KylinConfig;
 import org.apache.kylin.common.QueryContext;
 import org.apache.kylin.common.event.ModelAddEvent;
@@ -130,17 +130,17 @@ import org.apache.kylin.common.util.RandomUtil;
 import org.apache.kylin.common.util.StringHelper;
 import org.apache.kylin.common.util.ThreadUtil;
 import org.apache.kylin.engine.spark.utils.ComputedColumnEvalUtil;
-import org.apache.kylin.job.SecondStorageJobParamUtil;
+//import org.apache.kylin.job.SecondStorageJobParamUtil;
 import org.apache.kylin.job.common.SegmentUtil;
 import org.apache.kylin.job.execution.AbstractExecutable;
 import org.apache.kylin.job.execution.ExecutableState;
 import org.apache.kylin.job.execution.JobTypeEnum;
 import org.apache.kylin.job.execution.NExecutableManager;
-import org.apache.kylin.job.handler.SecondStorageIndexCleanJobHandler;
-import org.apache.kylin.job.handler.SecondStorageSegmentCleanJobHandler;
-import org.apache.kylin.job.handler.SecondStorageSegmentLoadJobHandler;
-import org.apache.kylin.job.manager.JobManager;
-import org.apache.kylin.job.model.JobParam;
+//import org.apache.kylin.job.handler.SecondStorageIndexCleanJobHandler;
+//import org.apache.kylin.job.handler.SecondStorageSegmentCleanJobHandler;
+//import org.apache.kylin.job.handler.SecondStorageSegmentLoadJobHandler;
+//import org.apache.kylin.job.manager.JobManager;
+//import org.apache.kylin.job.model.JobParam;
 import org.apache.kylin.metadata.acl.AclTCRManager;
 import org.apache.kylin.metadata.acl.NDataModelAclParams;
 import org.apache.kylin.metadata.cube.cuboid.NAggregationGroup;
@@ -246,7 +246,7 @@ import org.apache.kylin.rest.util.AclPermissionUtil;
 import org.apache.kylin.rest.util.ModelTriple;
 import org.apache.kylin.rest.util.ModelUtils;
 import org.apache.kylin.rest.util.PagingUtil;
-import org.apache.kylin.rest.util.SpringContext;
+//import org.apache.kylin.rest.util.SpringContext;
 import org.apache.kylin.source.SourceFactory;
 import org.apache.kylin.source.adhocquery.PushDownConverterKeyWords;
 import org.apache.kylin.streaming.event.StreamingJobDropEvent;
@@ -274,15 +274,14 @@ import org.apache.kylin.guava30.shaded.common.collect.Maps;
 import org.apache.kylin.guava30.shaded.common.collect.Sets;
 
 import org.apache.kylin.guava30.shaded.common.base.Supplier;
-import io.kyligence.kap.secondstorage.SecondStorage;
-import io.kyligence.kap.secondstorage.SecondStorageNodeHelper;
-import io.kyligence.kap.secondstorage.SecondStorageUpdater;
-import io.kyligence.kap.secondstorage.SecondStorageUtil;
-import io.kyligence.kap.secondstorage.enums.LockTypeEnum;
-import io.kyligence.kap.secondstorage.metadata.TableData;
-import io.kyligence.kap.secondstorage.metadata.TablePartition;
-import io.kyligence.kap.secondstorage.response.SecondStorageNode;
-import io.kyligence.kap.secondstorage.util.SecondStorageJobUtil;
+//import io.kyligence.kap.secondstorage.SecondStorage;
+//import io.kyligence.kap.secondstorage.SecondStorageNodeHelper;
+//import io.kyligence.kap.secondstorage.SecondStorageUpdater;
+//import io.kyligence.kap.secondstorage.SecondStorageUtil;
+//import io.kyligence.kap.secondstorage.enums.LockTypeEnum;
+//import io.kyligence.kap.secondstorage.metadata.TableData;
+//
+//import io.kyligence.kap.secondstorage.util.SecondStorageJobUtil;
 import lombok.Setter;
 import lombok.val;
 import lombok.var;
@@ -657,7 +656,7 @@ public class ModelService extends AbstractModelService implements TableModelSupp
             val pair = getModelsOfCurrentPage(params, tripleList, params.isLite());
             models.addAll(pair.getFirst());
             // add second storage infos
-            ModelUtils.addSecondStorageInfo(project, models);
+//            ModelUtils.addSecondStorageInfo(project, models);
             filterModels = new DataResult<>(models, pair.getSecond(), offset, limit);
             filterModels.setValue(addOldParams(project, filterModels.getValue()));
             filterModels.setValue(updateResponseAcl(filterModels.getValue(), project));
@@ -960,8 +959,8 @@ public class ModelService extends AbstractModelService implements TableModelSupp
         NDataflow dataflow = dataflowManager.getDataflow(modelId);
         List<NDataSegmentResponse> segmentResponseList = getSegmentsResponseCore(modelId, project, start, end, status,
                 withAllIndexes, withoutAnyIndexes, executables, allToComplement, dataflow);
-        addSecondStorageResponse(modelId, project, segmentResponseList, dataflow);
-        addSecondStorageDisplayStatus(modelId, project, segmentResponseList);
+//        addSecondStorageResponse(modelId, project, segmentResponseList, dataflow);
+//        addSecondStorageDisplayStatus(modelId, project, segmentResponseList);
         changeSegmentDisplayStatus(modelId, project, segmentResponseList);
         segmentResponseList = segmentResponseFilter(statuses, secondStorageStatuses, segmentResponseList, modelId,
                 project);
@@ -974,8 +973,8 @@ public class ModelService extends AbstractModelService implements TableModelSupp
         NDataflowManager dataflowManager = getManager(NDataflowManager.class, project);
         NDataflow dataflow = dataflowManager.getDataflow(modelId);
         List<NDataSegmentResponse> segmentResponseList = getSegmentsResponseCoreByJob(job, dataflow);
-        addSecondStorageResponse(modelId, project, segmentResponseList, dataflow);
-        addSecondStorageDisplayStatus(modelId, project, segmentResponseList);
+//        addSecondStorageResponse(modelId, project, segmentResponseList, dataflow);
+//        addSecondStorageDisplayStatus(modelId, project, segmentResponseList);
         changeSegmentDisplayStatus(modelId, project, segmentResponseList);
         return segmentResponseList;
     }
@@ -1035,80 +1034,74 @@ public class ModelService extends AbstractModelService implements TableModelSupp
     public void addSecondStorageResponse(String modelId, String project, List<NDataSegmentResponse> segmentResponseList,
             NDataflow dataflow) {
 
-        if (!SecondStorageUtil.isModelEnable(project, modelId))
-            return;
-
-        val tableFlowManager = SecondStorage.tableFlowManager(getConfig(), project);
-        val tableFlow = tableFlowManager.get(dataflow.getId()).orElse(null);
-        if (tableFlow != null) {
-            Map<String, List<TablePartition>> tablePartitions = tableFlow.getTableDataList().stream()
-                    .flatMap(tableData -> tableData.getPartitions().stream())
-                    .collect(Collectors.toMap(TablePartition::getSegmentId, partition -> Lists.newArrayList(partition),
-                            (List<TablePartition> a, List<TablePartition> b) -> {
-                                a.addAll(b);
-                                return a;
-                            }));
-
-            List<Set<String>> shards = SecondStorageNodeHelper
-                    .groupsToShards(SecondStorageUtil.listNodeGroup(getConfig(), project));
-
-            segmentResponseList.forEach(segment -> {
-                if (tablePartitions.containsKey(segment.getId())) {
-                    val nodes = new HashSet<String>();
-                    var partitions = tablePartitions.get(segment.getId());
-                    for (TablePartition partition : partitions) {
-                        nodes.addAll(partition.getShardNodes());
-                    }
-
-                    segment.setSecondStorageSize(SecondStorageUtil.calculateSecondStorageSize(shards, partitions));
-
-                    Map<String, List<SecondStorageNode>> pairs = SecondStorageUtil
-                            .convertNodesToPairs(new ArrayList<>(nodes));
-                    segment.setSecondStorageNodes(pairs);
-                } else {
-                    segment.setSecondStorageNodes(Collections.emptyMap());
-                    segment.setSecondStorageSize(0L);
-                }
-            });
-        }
+//        if (!SecondStorageUtil.isModelEnable(project, modelId))
+//            return;
+//
+//        val tableFlowManager = SecondStorage.tableFlowManager(getConfig(), project);
+//        val tableFlow = tableFlowManager.get(dataflow.getId()).orElse(null);
+//        if (tableFlow != null) {
+//            Map<String, List<TablePartition>> tablePartitions = tableFlow.getTableDataList().stream()
+//                    .flatMap(tableData -> tableData.getPartitions().stream())
+//                    .collect(Collectors.toMap(TablePartition::getSegmentId, partition -> Lists.newArrayList(partition),
+//                            (List<TablePartition> a, List<TablePartition> b) -> {
+//                                a.addAll(b);
+//                                return a;
+//                            }));
+//
+//            List<Set<String>> shards = SecondStorageNodeHelper
+//                    .groupsToShards(SecondStorageUtil.listNodeGroup(getConfig(), project));
+//
+//            segmentResponseList.forEach(segment -> {
+//                if (tablePartitions.containsKey(segment.getId())) {
+//                    val nodes = new HashSet<String>();
+//                    var partitions = tablePartitions.get(segment.getId());
+//                    for (TablePartition partition : partitions) {
+//                        nodes.addAll(partition.getShardNodes());
+//                    }
+//
+//                    segment.setSecondStorageSize(SecondStorageUtil.calculateSecondStorageSize(shards, partitions));
+//
+//                    Map<String, List<SecondStorageNode>> pairs = SecondStorageUtil
+//                            .convertNodesToPairs(new ArrayList<>(nodes));
+//                    segment.setSecondStorageNodes(pairs);
+//                } else {
+//                    segment.setSecondStorageNodes(Collections.emptyMap());
+//                    segment.setSecondStorageSize(0L);
+//                }
+//            });
+//        }
     }
+//
+//    public void addSecondStorageDisplayStatus(String modelId, String project,
+//            List<NDataSegmentResponse> segmentResponseList) {
+//    }
 
-    public void addSecondStorageDisplayStatus(String modelId, String project,
-            List<NDataSegmentResponse> segmentResponseList) {
-        if (!SecondStorageUtil.isModelEnable(project, modelId)) {
-            return;
-        }
-        val jobRunning = getJobRunning(project);
-        segmentResponseList.forEach(segmentResponse -> segmentResponse.setStatusSecondStorageToDisplay(
-                getSecondStorageSegmentStatus(modelId, project, segmentResponse, jobRunning)));
-    }
-
-    public SegmentSecondStorageStatusEnum getSecondStorageSegmentStatus(String modelId, String project,
-            NDataSegmentResponse segmentResponse, List<AbstractExecutable> jobRunning) {
-
-        NExecutableManager manager = getManager(NExecutableManager.class, project);
-        boolean hasSecondStorageJobRunning = jobRunning.stream()
-                .filter(job -> job.getSegmentIds().contains(segmentResponse.getId()))
-                .anyMatch(job -> NExecutableManager.toPO(job, project).getTasks().stream()
-                        .filter(task -> SecondStorageUtil.EXPORT_STEPS.contains(task.getName()))
-                        .anyMatch(task -> manager.getOutput(task.getId()).getState().isRunning()));
-
-        Set<Long> chSegmentEnableLayouts = SecondStorageUtil.listEnableLayoutBySegment(project, modelId,
-                segmentResponse.getId());
-        SegmentSecondStorageStatusEnum segmentSecondStorageStatusEnum = null;
-
-        if (CollectionUtils.isNotEmpty(chSegmentEnableLayouts)) {
-            // segment CH part ready
-            segmentSecondStorageStatusEnum = SegmentStatusEnumToDisplay.LOCKED == segmentResponse.getStatusToDisplay()
-                    ? SegmentSecondStorageStatusEnum.LOCKED
-                    : SegmentSecondStorageStatusEnum.LOADED;
-        }
-        if (hasSecondStorageJobRunning) {
-            // segment CH part has job running
-            segmentSecondStorageStatusEnum = SegmentSecondStorageStatusEnum.LOADING;
-        }
-        return segmentSecondStorageStatusEnum;
-    }
+//    public SegmentSecondStorageStatusEnum getSecondStorageSegmentStatus(String modelId, String project,
+//            NDataSegmentResponse segmentResponse, List<AbstractExecutable> jobRunning) {
+//
+//        NExecutableManager manager = getManager(NExecutableManager.class, project);
+//        boolean hasSecondStorageJobRunning = jobRunning.stream()
+//                .filter(job -> job.getSegmentIds().contains(segmentResponse.getId()))
+//                .anyMatch(job -> NExecutableManager.toPO(job, project).getTasks().stream()
+//                        .filter(task -> SecondStorageUtil.EXPORT_STEPS.contains(task.getName()))
+//                        .anyMatch(task -> manager.getOutput(task.getId()).getState().isRunning()));
+//
+//        Set<Long> chSegmentEnableLayouts = SecondStorageUtil.listEnableLayoutBySegment(project, modelId,
+//                segmentResponse.getId());
+//        SegmentSecondStorageStatusEnum segmentSecondStorageStatusEnum = null;
+//
+//        if (CollectionUtils.isNotEmpty(chSegmentEnableLayouts)) {
+//            // segment CH part ready
+//            segmentSecondStorageStatusEnum = SegmentStatusEnumToDisplay.LOCKED == segmentResponse.getStatusToDisplay()
+//                    ? SegmentSecondStorageStatusEnum.LOCKED
+//                    : SegmentSecondStorageStatusEnum.LOADED;
+//        }
+//        if (hasSecondStorageJobRunning) {
+//            // segment CH part has job running
+//            segmentSecondStorageStatusEnum = SegmentSecondStorageStatusEnum.LOADING;
+//        }
+//        return segmentSecondStorageStatusEnum;
+//    }
 
     public List<AbstractExecutable> getJobRunning(String project) {
         NExecutableManager execManager = getManager(NExecutableManager.class, project);
@@ -1118,28 +1111,28 @@ public class ModelService extends AbstractModelService implements TableModelSupp
 
     public void changeSegmentDisplayStatus(String modelId, String project,
             List<NDataSegmentResponse> segmentResponseList) {
-        if (!SecondStorageUtil.isModelEnable(project, modelId)) {
-            return;
-        }
-        NDataflowManager dataflowManager = getManager(NDataflowManager.class, project);
-        NDataflow df = dataflowManager.getDataflow(modelId);
-        segmentResponseList.forEach(segmentResponse -> {
-            if (SegmentStatusEnumToDisplay.ONLINE == segmentResponse.getStatusToDisplay()) {
-                SegmentSecondStorageStatusEnum statusSecondStorageToDisplay = segmentResponse
-                        .getStatusSecondStorageToDisplay();
-                if (MapUtils.isNotEmpty(df.getSegment(segmentResponse.getId()).getLayoutsMap())
-                        && (SegmentSecondStorageStatusEnum.LOADING == statusSecondStorageToDisplay
-                                || Objects.isNull(statusSecondStorageToDisplay))) {
-                    SegmentStatusEnumToDisplay segmentStatusEnumToDisplay = KapConfig.getInstanceFromEnv().isCloud()
-                            ? SegmentStatusEnumToDisplay.ONLINE_OBJECT_STORAGE
-                            : SegmentStatusEnumToDisplay.ONLINE_HDFS;
-                    segmentResponse.setStatusToDisplay(segmentStatusEnumToDisplay);
-                } else if (MapUtils.isEmpty(df.getSegment(segmentResponse.getId()).getLayoutsMap())
-                        && SegmentSecondStorageStatusEnum.LOADED == statusSecondStorageToDisplay) {
-                    segmentResponse.setStatusToDisplay(SegmentStatusEnumToDisplay.ONLINE_TIERED_STORAGE);
-                }
-            }
-        });
+//        if (!SecondStorageUtil.isModelEnable(project, modelId)) {
+//            return;
+//        }
+//        NDataflowManager dataflowManager = getManager(NDataflowManager.class, project);
+//        NDataflow df = dataflowManager.getDataflow(modelId);
+//        segmentResponseList.forEach(segmentResponse -> {
+//            if (SegmentStatusEnumToDisplay.ONLINE == segmentResponse.getStatusToDisplay()) {
+//                SegmentSecondStorageStatusEnum statusSecondStorageToDisplay = segmentResponse
+//                        .getStatusSecondStorageToDisplay();
+//                if (MapUtils.isNotEmpty(df.getSegment(segmentResponse.getId()).getLayoutsMap())
+//                        && (SegmentSecondStorageStatusEnum.LOADING == statusSecondStorageToDisplay
+//                                || Objects.isNull(statusSecondStorageToDisplay))) {
+//                    SegmentStatusEnumToDisplay segmentStatusEnumToDisplay = KapConfig.getInstanceFromEnv().isCloud()
+//                            ? SegmentStatusEnumToDisplay.ONLINE_OBJECT_STORAGE
+//                            : SegmentStatusEnumToDisplay.ONLINE_HDFS;
+//                    segmentResponse.setStatusToDisplay(segmentStatusEnumToDisplay);
+//                } else if (MapUtils.isEmpty(df.getSegment(segmentResponse.getId()).getLayoutsMap())
+//                        && SegmentSecondStorageStatusEnum.LOADED == statusSecondStorageToDisplay) {
+//                    segmentResponse.setStatusToDisplay(SegmentStatusEnumToDisplay.ONLINE_TIERED_STORAGE);
+//                }
+//            }
+//        });
     }
 
     public List<NDataSegmentResponse> segmentResponseFilter(List<String> statuses, List<String> secondStorageStatuses,
@@ -1147,9 +1140,9 @@ public class ModelService extends AbstractModelService implements TableModelSupp
         if (CollectionUtils.isEmpty(statuses) && CollectionUtils.isEmpty(secondStorageStatuses)) {
             return segmentResponseList;
         }
-        if (!SecondStorageUtil.isModelEnable(project, modelId) && CollectionUtils.isNotEmpty(secondStorageStatuses)) {
-            secondStorageStatuses.clear();
-        }
+//        if (!SecondStorageUtil.isModelEnable(project, modelId) && CollectionUtils.isNotEmpty(secondStorageStatuses)) {
+//            secondStorageStatuses.clear();
+//        }
         val statusEnumSet = statuses.stream().map(SegmentStatusEnumToDisplay::getByName).filter(Objects::nonNull)
                 .collect(Collectors.toSet());
         val statusSecondStorageEnum = secondStorageStatuses.stream().map(SegmentSecondStorageStatusEnum::getByName)
@@ -1383,7 +1376,7 @@ public class ModelService extends AbstractModelService implements TableModelSupp
             EventBusFactory.getInstance().postSync(new StreamingJobDropEvent(project, modelId));
         }
 
-        disableSecondStorageModel(project, modelId);
+//        disableSecondStorageModel(project, modelId);
 
         val dataflowManager = NDataflowManager.getInstance(KylinConfig.getInstanceFromEnv(), project);
         val indexPlanManager = NIndexPlanManager.getInstance(KylinConfig.getInstanceFromEnv(), project);
@@ -1407,7 +1400,7 @@ public class ModelService extends AbstractModelService implements TableModelSupp
             NDataSegment[] nDataSegments = segments.toArray(segmentsArray);
             nDataflowUpdate.setToRemoveSegs(nDataSegments);
             dataflowManager.updateDataflow(nDataflowUpdate);
-            disableSecondStorageModel(project, modelId);
+//            disableSecondStorageModel(project, modelId);
         }
         offlineModelIfNecessary(dataflowManager, modelId);
     }
@@ -2007,9 +2000,9 @@ public class ModelService extends AbstractModelService implements TableModelSupp
             modelRequest.setUuid(model.getUuid());
             updateExcludedCheckerResult(project, modelRequest);
             // enable second storage
-            if (modelRequest.isWithSecondStorage() && !SecondStorageUtil.isModelEnable(project, model.getId())) {
-                SecondStorageUtil.initModelMetaData(project, model.getId());
-            }
+//            if (modelRequest.isWithSecondStorage() && !SecondStorageUtil.isModelEnable(project, model.getId())) {
+//                SecondStorageUtil.initModelMetaData(project, model.getId());
+//            }
             return getManager(NDataModelManager.class, project).getDataModelDesc(model.getUuid());
         }, project);
     }
@@ -2423,36 +2416,36 @@ public class ModelService extends AbstractModelService implements TableModelSupp
             getManager(NIndexPlanManager.class, project).updateIndexPlan(dataflow.getUuid(),
                     IndexPlan::removeTobeDeleteIndexIfNecessary);
 
-            if (SecondStorageUtil.isModelEnable(project, modelId)) {
-                SecondStorage.tableFlowManager(getConfig(), project).get(modelId).ifPresent(tableFlow -> {
-                    SecondStorageUtil.validateProjectLock(project, Collections.singletonList(LockTypeEnum.LOAD.name()));
-
-                    val tablePlanManager = SecondStorageUtil.tablePlanManager(getConfig(), project);
-                    Preconditions.checkState(tablePlanManager.isPresent());
-                    Preconditions.checkState(tablePlanManager.get().get(modelId).isPresent());
-                    val tablePlan = tablePlanManager.get().get(modelId).get();
-
-                    Set<Long> needDeleteLayoutIds = tableFlow.getTableDataList().stream()
-                            .filter(tableData -> indexIds.contains(tableData.getLayoutID()))
-                            .filter(tableData -> tableData.getPartitions().stream()
-                                    .allMatch(tablePartition -> segmentIds.contains(tablePartition.getSegmentId())))
-                            .map(TableData::getLayoutID).filter(layoutId -> dataflow.getIndexPlan()
-                                    .getBaseTableLayoutId().longValue() != layoutId.longValue())
-                            .collect(Collectors.toSet());
-
-                    SecondStorageUtil.cleanSegments(project, modelId, new HashSet<>(segmentIds),
-                            new HashSet<>(indexIds));
-
-                    tableFlow.update(copied -> copied
-                            .cleanTableData(tableData -> needDeleteLayoutIds.contains(tableData.getLayoutID())));
-                    tablePlan.update(t -> t.cleanTable(needDeleteLayoutIds));
-
-                    val jobHandler = new SecondStorageIndexCleanJobHandler();
-                    final JobParam param = SecondStorageJobParamUtil.layoutCleanParam(project, modelId,
-                            BasicService.getUsername(), new HashSet<>(indexIds), new HashSet<>(segmentIds));
-                    getManager(JobManager.class, project).addJob(param, jobHandler);
-                });
-            }
+//            if (SecondStorageUtil.isModelEnable(project, modelId)) {
+//                SecondStorage.tableFlowManager(getConfig(), project).get(modelId).ifPresent(tableFlow -> {
+//                    SecondStorageUtil.validateProjectLock(project, Collections.singletonList(LockTypeEnum.LOAD.name()));
+//
+//                    val tablePlanManager = SecondStorageUtil.tablePlanManager(getConfig(), project);
+//                    Preconditions.checkState(tablePlanManager.isPresent());
+//                    Preconditions.checkState(tablePlanManager.get().get(modelId).isPresent());
+//                    val tablePlan = tablePlanManager.get().get(modelId).get();
+//
+//                    Set<Long> needDeleteLayoutIds = tableFlow.getTableDataList().stream()
+//                            .filter(tableData -> indexIds.contains(tableData.getLayoutID()))
+//                            .filter(tableData -> tableData.getPartitions().stream()
+//                                    .allMatch(tablePartition -> segmentIds.contains(tablePartition.getSegmentId())))
+//                            .map(TableData::getLayoutID).filter(layoutId -> dataflow.getIndexPlan()
+//                                    .getBaseTableLayoutId().longValue() != layoutId.longValue())
+//                            .collect(Collectors.toSet());
+//
+//                    SecondStorageUtil.cleanSegments(project, modelId, new HashSet<>(segmentIds),
+//                            new HashSet<>(indexIds));
+//
+//                    tableFlow.update(copied -> copied
+//                            .cleanTableData(tableData -> needDeleteLayoutIds.contains(tableData.getLayoutID())));
+//                    tablePlan.update(t -> t.cleanTable(needDeleteLayoutIds));
+//
+//                    val jobHandler = new SecondStorageIndexCleanJobHandler();
+//                    final JobParam param = SecondStorageJobParamUtil.layoutCleanParam(project, modelId,
+//                            BasicService.getUsername(), new HashSet<>(indexIds), new HashSet<>(segmentIds));
+//                    getManager(JobManager.class, project).addJob(param, jobHandler);
+//                });
+//            }
             return null;
         }, project);
     }
@@ -2465,9 +2458,9 @@ public class ModelService extends AbstractModelService implements TableModelSupp
                 .filter(NDataModel.NamedColumn::isDimension).collect(Collectors.toList()));
         request.setComputedColumnDescs(modelDesc.getComputedColumnDescs());
 
-        if (SecondStorageUtil.isModelEnable(modelDesc.getProject(), modelDesc.getId())) {
-            request.setWithSecondStorage(true);
-        }
+//        if (SecondStorageUtil.isModelEnable(modelDesc.getProject(), modelDesc.getId())) {
+//            request.setWithSecondStorage(true);
+//        }
 
         return request;
     }
@@ -2615,7 +2608,7 @@ public class ModelService extends AbstractModelService implements TableModelSupp
         for (NDataSegment existedSegment : segments) {
             if (buildSegmentOverlapEnable && NDataModel.ModelType.BATCH == model.getModelType()
                     && !model.isMultiPartitionModel() && isBuildAllIndexes && isBuildAllIndexesFinally
-                    && !SecondStorageUtil.isModelEnable(project, model.getId())) {
+                    ) {
                 isOverlap = existedSegment.getSegRange().overlaps(segmentRangeToBuild)
                         && !segmentRangeToBuild.contains(existedSegment.getSegRange());
             } else {
@@ -2808,10 +2801,10 @@ public class ModelService extends AbstractModelService implements TableModelSupp
     @Transaction(project = 1)
     public void deleteSegmentById(String model, String project, String[] ids, boolean force) {
         aclEvaluate.checkProjectOperationPermission(project);
-        if (SecondStorageUtil.isModelEnable(project, model)) {
-            LockTypeEnum.checkLock(LockTypeEnum.LOAD.name(), SecondStorageUtil.getProjectLocks(project));
-        }
-        SecondStorageUtil.checkSegmentRemove(project, model, ids);
+//        if (SecondStorageUtil.isModelEnable(project, model)) {
+//            LockTypeEnum.checkLock(LockTypeEnum.LOAD.name(), SecondStorageUtil.getProjectLocks(project));
+//        }
+//        SecondStorageUtil.checkSegmentRemove(project, model, ids);
         NDataModel dataModel = getManager(NDataModelManager.class, project).getDataModelDesc(model);
         if (ManagementType.TABLE_ORIENTED == dataModel.getManagementType()) {
             throw new KylinException(PERMISSION_DENIED,
@@ -2831,13 +2824,13 @@ public class ModelService extends AbstractModelService implements TableModelSupp
                         String.format(Locale.ROOT, MsgPicker.getMsg().getSegNotFound(), id, dataflow.getModelAlias()));
             }
         }
-        if (SecondStorageUtil.isModelEnable(project, model)) {
-            SecondStorageUtil.cleanSegments(project, model, idsToDelete);
-            val jobHandler = new SecondStorageSegmentCleanJobHandler();
-            final JobParam param = SecondStorageJobParamUtil.segmentCleanParam(project, model,
-                    BasicService.getUsername(), idsToDelete);
-            getManager(JobManager.class, project).addJob(param, jobHandler);
-        }
+//        if (SecondStorageUtil.isModelEnable(project, model)) {
+//            SecondStorageUtil.cleanSegments(project, model, idsToDelete);
+//            val jobHandler = new SecondStorageSegmentCleanJobHandler();
+//            final JobParam param = SecondStorageJobParamUtil.segmentCleanParam(project, model,
+//                    BasicService.getUsername(), idsToDelete);
+//            getManager(JobManager.class, project).addJob(param, jobHandler);
+//        }
         segmentHelper.removeSegment(project, dataflow.getUuid(), idsToDelete);
         offlineModelIfNecessary(dataflowManager, model);
     }
@@ -2958,7 +2951,7 @@ public class ModelService extends AbstractModelService implements TableModelSupp
             if (SegmentStatusEnum.READY != segment.getStatus() && SegmentStatusEnum.WARNING != segment.getStatus()) {
                 throw new KylinException(PERMISSION_DENIED, MsgPicker.getMsg().getInvalidMergeSegment());
             }
-            checkSegmentSecondStorage(modelId, project, segment);
+//            checkSegmentSecondStorage(modelId, project, segment);
             val segmentStart = segment.getTSRange().getStart();
             val segmentEnd = segment.getTSRange().getEnd();
 
@@ -2973,34 +2966,35 @@ public class ModelService extends AbstractModelService implements TableModelSupp
     }
 
     public void checkSegmentSecondStorage(String modelId, String project, NDataSegment segment) {
-        if (!SecondStorageUtil.isModelEnable(project, modelId)) {
-            return;
-        }
-        // when enable second storage, need DFS build success, if not, throw exception
-        if (MapUtils.isEmpty(segment.getLayoutsMap())) {
-            throw new KylinException(PERMISSION_DENIED, MsgPicker.getMsg().getInvalidMergeSegmentWithoutDFS());
-        }
+//        if (!SecondStorageUtil.isModelEnable(project, modelId)) {
+//            return;
+//        }
+//        // when enable second storage, need DFS build success, if not, throw exception
+//        if (MapUtils.isEmpty(segment.getLayoutsMap())) {
+//            throw new KylinException(PERMISSION_DENIED, MsgPicker.getMsg().getInvalidMergeSegmentWithoutDFS());
+//        }
     }
 
     @Transaction(project = 0)
     public List<JobInfoResponse.JobInfo> exportSegmentToSecondStorage(String project, String model,
             String[] segmentIds) {
-        aclEvaluate.checkProjectOperationPermission(project);
-        SecondStorageJobUtil.validateSegment(project, model, Arrays.asList(segmentIds));
-        checkSegmentsExistById(model, project, segmentIds);
-        checkSegmentsStatus(model, project, segmentIds, SegmentStatusEnumToDisplay.LOADING,
-                SegmentStatusEnumToDisplay.REFRESHING, SegmentStatusEnumToDisplay.MERGING,
-                SegmentStatusEnumToDisplay.LOCKED);
-
-        if (!SecondStorage.enabled()) {
-            throw new KylinException(JobErrorCode.JOB_CONFIGURATION_ERROR, "!!!No Tiered Storage is installed!!!");
-        }
-        val jobHandler = new SecondStorageSegmentLoadJobHandler();
-
-        final JobParam param = SecondStorageJobParamUtil.of(project, model, BasicService.getUsername(),
-                Stream.of(segmentIds));
-        return Collections.singletonList(new JobInfoResponse.JobInfo(JobTypeEnum.EXPORT_TO_SECOND_STORAGE.toString(),
-                getManager(JobManager.class, project).addJob(param, jobHandler)));
+//        aclEvaluate.checkProjectOperationPermission(project);
+//        SecondStorageJobUtil.validateSegment(project, model, Arrays.asList(segmentIds));
+//        checkSegmentsExistById(model, project, segmentIds);
+//        checkSegmentsStatus(model, project, segmentIds, SegmentStatusEnumToDisplay.LOADING,
+//                SegmentStatusEnumToDisplay.REFRESHING, SegmentStatusEnumToDisplay.MERGING,
+//                SegmentStatusEnumToDisplay.LOCKED);
+//
+//        if (!SecondStorage.enabled()) {
+//            throw new KylinException(JobErrorCode.JOB_CONFIGURATION_ERROR, "!!!No Tiered Storage is installed!!!");
+//        }
+//        val jobHandler = new SecondStorageSegmentLoadJobHandler();
+//
+//        final JobParam param = SecondStorageJobParamUtil.of(project, model, BasicService.getUsername(),
+//                Stream.of(segmentIds));
+//        return Collections.singletonList(new JobInfoResponse.JobInfo(JobTypeEnum.EXPORT_TO_SECOND_STORAGE.toString(),
+//                getManager(JobManager.class, project).addJob(param, jobHandler)));
+        return null;
     }
 
     public BuildBaseIndexResponse updateDataModelSemantic(String project, ModelRequest request) {
@@ -3059,15 +3053,15 @@ public class ModelService extends AbstractModelService implements TableModelSupp
                         request.getStart(), request.getEnd());
 
                 updateExcludedCheckerResult(project, request);
-                baseIndexUpdater.setSecondStorageEnabled(request.isWithSecondStorage());
+//                baseIndexUpdater.setSecondStorageEnabled(request.isWithSecondStorage());
                 BuildBaseIndexResponse baseIndexResponse = baseIndexUpdater.update(indexPlanService);
                 if (!request.isSaveOnly() && (needBuild || baseIndexResponse.hasIndexChange())) {
                     semanticUpdater.buildForModel(project, modelId);
                 }
                 modelChangeSupporters.forEach(listener -> listener.onUpdate(project, modelId));
 
-                changeSecondStorageIfNeeded(project, request, () -> !semanticUpdater.isSignificantChange(originModel,
-                        modelManager.getDataModelDesc(modelId)));
+//                changeSecondStorageIfNeeded(project, request, () -> !semanticUpdater.isSignificantChange(originModel,
+//                        modelManager.getDataModelDesc(modelId)));
                 return baseIndexResponse;
             }, project);
         } catch (TransactionException te) {
@@ -3080,40 +3074,40 @@ public class ModelService extends AbstractModelService implements TableModelSupp
     }
 
     public String updateSecondStorageModel(String project, String modelId) {
-        if (!SecondStorageUtil.isModelEnable(project, modelId)) {
+//        if (!SecondStorageUtil.isModelEnable(project, modelId)) {
             return "";
-        }
+//        }
 
-        SecondStorageUpdater updater = SpringContext.getBean(SecondStorageUpdater.class);
-        return updater.updateIndex(project, modelId);
+//        SecondStorageUpdater updater = SpringContext.getBean(SecondStorageUpdater.class);
+//        return updater.updateIndex(project, modelId);
     }
 
-    private void disableSecondStorageModel(String project, String modelId) {
-        if (SecondStorageUtil.isModelEnable(project, modelId)) {
-            SecondStorageUpdater updater = SpringContext.getBean(SecondStorageUpdater.class);
-            updater.disableModel(project, modelId);
-        }
-    }
+//    private void disableSecondStorageModel(String project, String modelId) {
+//        if (SecondStorageUtil.isModelEnable(project, modelId)) {
+//            SecondStorageUpdater updater = SpringContext.getBean(SecondStorageUpdater.class);
+//            updater.disableModel(project, modelId);
+//        }
+//    }
 
     public void changeSecondStorageIfNeeded(String project, ModelRequest request, Supplier<Boolean> needClean) {
         // disable second storage
-        if (request.getId() != null && SecondStorageUtil.isModelEnable(project, request.getId())
-                && !request.isWithSecondStorage()) {
-            SecondStorageUtil.validateDisableModel(project, request.getId());
-            if (Boolean.TRUE.equals(needClean.get())) {
-                disableSecondStorageModel(project, request.getId());
-            } else {
-                SecondStorageUtil.disableModel(project, request.getId());
-            }
-        } else if (request.getId() != null && !SecondStorageUtil.isModelEnable(project, request.getId())
-                && request.isWithSecondStorage()) {
-            val indexPlanManager = getManager(NIndexPlanManager.class, project);
-            if (!indexPlanManager.getIndexPlan(request.getId()).containBaseTableLayout()) {
-                indexPlanManager.updateIndexPlan(request.getId(), copied -> copied.createAndAddBaseIndex(
-                        Collections.singletonList(copied.createBaseTableIndex(copied.getModel()))));
-            }
-            SecondStorageUtil.initModelMetaData(project, request.getId());
-        }
+//        if (request.getId() != null && SecondStorageUtil.isModelEnable(project, request.getId())
+//                && !request.isWithSecondStorage()) {
+//            SecondStorageUtil.validateDisableModel(project, request.getId());
+//            if (Boolean.TRUE.equals(needClean.get())) {
+//                disableSecondStorageModel(project, request.getId());
+//            } else {
+//                SecondStorageUtil.disableModel(project, request.getId());
+//            }
+//        } else if (request.getId() != null && !SecondStorageUtil.isModelEnable(project, request.getId())
+//                && request.isWithSecondStorage()) {
+//            val indexPlanManager = getManager(NIndexPlanManager.class, project);
+//            if (!indexPlanManager.getIndexPlan(request.getId()).containBaseTableLayout()) {
+//                indexPlanManager.updateIndexPlan(request.getId(), copied -> copied.createAndAddBaseIndex(
+//                        Collections.singletonList(copied.createBaseTableIndex(copied.getModel()))));
+//            }
+//            SecondStorageUtil.initModelMetaData(project, request.getId());
+//        }
     }
 
     public void updateExcludedCheckerResult(String project, ModelRequest request) {
@@ -4243,9 +4237,9 @@ public class ModelService extends AbstractModelService implements TableModelSupp
                 .filter(col -> ccFullNameSet.contains(col.getAliasDotColumn())) //
                 .forEach(col -> col.setStatus(NDataModel.ColumnStatus.TOMB));
 
-        if (SecondStorageUtil.isModelEnable(model.getProject(), model.getId())) {
-            request.setWithSecondStorage(true);
-        }
+//        if (SecondStorageUtil.isModelEnable(model.getProject(), model.getId())) {
+//            request.setWithSecondStorage(true);
+//        }
 
         request.setProject(projectName);
     }

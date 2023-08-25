@@ -50,7 +50,7 @@ import org.springframework.stereotype.Component;
 
 import org.apache.kylin.guava30.shaded.common.collect.Sets;
 
-import io.kyligence.kap.secondstorage.SecondStorageUtil;
+//import io.kyligence.kap.secondstorage.SecondStorageUtil;
 import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
@@ -108,7 +108,7 @@ public class ModelQueryService extends BasicService implements ModelQuerySupport
                 .collect(Collectors.toList());
 
         if (!modelAttributeSet.isEmpty()) {
-            val isProjectEnable = SecondStorageUtil.isProjectEnable(elem.getProjectName());
+            val isProjectEnable = false;
             modelTripleList = modelTripleList.parallelStream()
                     .filter(t -> filterModelAttribute(t, modelAttributeSet, isProjectEnable))
                     .collect(Collectors.toList());
@@ -138,10 +138,10 @@ public class ModelQueryService extends BasicService implements ModelQuerySupport
     private boolean isMatchSecondStorage(ModelTriple modelTriple, boolean isProjectEnable,
             Set<ModelAttributeEnum> modelAttributeSet) {
         boolean secondStorageMatched = false;
-        if (isProjectEnable && modelAttributeSet.contains(ModelAttributeEnum.SECOND_STORAGE)) {
-            secondStorageMatched = SecondStorageUtil.isModelEnable(modelTriple.getDataModel().getProject(),
-                    modelTriple.getDataModel().getId());
-        }
+//        if (isProjectEnable && modelAttributeSet.contains(ModelAttributeEnum.SECOND_STORAGE)) {
+//            secondStorageMatched = SecondStorageUtil.isModelEnable(modelTriple.getDataModel().getProject(),
+//                    modelTriple.getDataModel().getId());
+//        }
         return secondStorageMatched;
     }
 

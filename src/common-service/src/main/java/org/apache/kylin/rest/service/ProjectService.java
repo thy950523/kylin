@@ -140,7 +140,7 @@ import org.apache.kylin.guava30.shaded.common.collect.Lists;
 import org.apache.kylin.guava30.shaded.common.collect.Maps;
 import org.apache.kylin.guava30.shaded.common.collect.Sets;
 
-import io.kyligence.kap.secondstorage.SecondStorageUtil;
+//import io.kyligence.kap.secondstorage.SecondStorageUtil;
 import lombok.SneakyThrows;
 import lombok.val;
 
@@ -611,10 +611,10 @@ public class ProjectService extends BasicService {
         response.setJdbcSourceEnable(config.getJdbcEnable());
         response.setJdbcSourceDriver(config.getJdbcDriver());
 
-        if (SecondStorageUtil.isGlobalEnable()) {
-            response.setSecondStorageEnabled(SecondStorageUtil.isProjectEnable(project));
-            response.setSecondStorageNodes(SecondStorageUtil.listProjectNodes(project));
-        }
+//        if (SecondStorageUtil.isGlobalEnable()) {
+//            response.setSecondStorageEnabled(SecondStorageUtil.isProjectEnable(project));
+//            response.setSecondStorageNodes(SecondStorageUtil.listProjectNodes(project));
+//        }
 
         return response;
     }
@@ -892,10 +892,10 @@ public class ProjectService extends BasicService {
     @PreAuthorize(Constant.ACCESS_HAS_ROLE_ADMIN)
     @Transaction(project = 0)
     public void dropProject(String project) {
-        if (SecondStorageUtil.isProjectEnable(project)) {
-            throw new KylinException(PROJECT_DROP_FAILED,
-                    String.format(Locale.ROOT, MsgPicker.getMsg().getProjectDropFailedSecondStorageEnabled(), project));
-        }
+//        if (SecondStorageUtil.isProjectEnable(project)) {
+//            throw new KylinException(PROJECT_DROP_FAILED,
+//                    String.format(Locale.ROOT, MsgPicker.getMsg().getProjectDropFailedSecondStorageEnabled(), project));
+//        }
 
         val kylinConfig = KylinConfig.getInstanceFromEnv();
         NExecutableManager nExecutableManager = NExecutableManager.getInstance(kylinConfig, project);

@@ -34,11 +34,11 @@ import org.apache.kylin.metadata.model.PartitionDesc;
 import org.apache.kylin.metadata.model.NDataModel;
 import org.apache.kylin.metadata.model.NDataModelManager;
 import org.apache.kylin.rest.constant.ModelAttributeEnum;
-import org.apache.kylin.rest.response.NDataModelResponse;
+//import org.apache.kylin.rest.response.NDataModelResponse;
 
 import org.apache.kylin.guava30.shaded.common.collect.Sets;
 
-import io.kyligence.kap.secondstorage.SecondStorageUtil;
+//import io.kyligence.kap.secondstorage.SecondStorageUtil;
 import lombok.val;
 
 public class ModelUtils {
@@ -93,39 +93,39 @@ public class ModelUtils {
         Set<ModelAttributeEnum> modelAttributeSet = Sets
                 .newHashSet(modelAttributes == null ? Collections.emptyList() : modelAttributes);
         Set<NDataModel> filteredModels = new HashSet<>();
-        if (SecondStorageUtil.isProjectEnable(project)) {
-            val secondStorageInfos = SecondStorageUtil.setSecondStorageSizeInfo(models);
-            val it = models.listIterator();
-            while (it.hasNext()) {
-                val secondStorageInfo = secondStorageInfos.get(it.nextIndex());
-                NDataModelResponse modelResponse = (NDataModelResponse) it.next();
-                modelResponse.setSecondStorageNodes(secondStorageInfo.getSecondStorageNodes());
-                modelResponse.setSecondStorageSize(secondStorageInfo.getSecondStorageSize());
-                modelResponse.setSecondStorageEnabled(secondStorageInfo.isSecondStorageEnabled());
-            }
-            if (modelAttributeSet.contains(ModelAttributeEnum.SECOND_STORAGE)) {
-                filteredModels.addAll(ModelAttributeEnum.SECOND_STORAGE.filter(models));
-                modelAttributeSet.remove(ModelAttributeEnum.SECOND_STORAGE);
-            }
-        }
+//        if (SecondStorageUtil.isProjectEnable(project)) {
+//            val secondStorageInfos = SecondStorageUtil.setSecondStorageSizeInfo(models);
+//            val it = models.listIterator();
+//            while (it.hasNext()) {
+//                val secondStorageInfo = secondStorageInfos.get(it.nextIndex());
+//                NDataModelResponse modelResponse = (NDataModelResponse) it.next();
+//                modelResponse.setSecondStorageNodes(secondStorageInfo.getSecondStorageNodes());
+//                modelResponse.setSecondStorageSize(secondStorageInfo.getSecondStorageSize());
+//                modelResponse.setSecondStorageEnabled(secondStorageInfo.isSecondStorageEnabled());
+//            }
+//            if (modelAttributeSet.contains(ModelAttributeEnum.SECOND_STORAGE)) {
+//                filteredModels.addAll(ModelAttributeEnum.SECOND_STORAGE.filter(models));
+//                modelAttributeSet.remove(ModelAttributeEnum.SECOND_STORAGE);
+//            }
+//        }
         for (val attr : modelAttributeSet) {
             filteredModels.addAll(attr.filter(models));
         }
         return filteredModels;
     }
 
-    public static void addSecondStorageInfo(String project, List<NDataModel> models) {
-        if (SecondStorageUtil.isProjectEnable(project)) {
-            val secondStorageInfos = SecondStorageUtil.setSecondStorageSizeInfo(models);
-            val it = models.listIterator();
-            while (it.hasNext()) {
-                val secondStorageInfo = secondStorageInfos.get(it.nextIndex());
-                NDataModelResponse modelResponse = (NDataModelResponse) it.next();
-                modelResponse.setSecondStorageNodes(secondStorageInfo.getSecondStorageNodes());
-                modelResponse.setSecondStorageSize(secondStorageInfo.getSecondStorageSize());
-                modelResponse.setSecondStorageEnabled(secondStorageInfo.isSecondStorageEnabled());
-            }
-        }
-    }
+//    public static void addSecondStorageInfo(String project, List<NDataModel> models) {
+//        if (SecondStorageUtil.isProjectEnable(project)) {
+//            val secondStorageInfos = SecondStorageUtil.setSecondStorageSizeInfo(models);
+//            val it = models.listIterator();
+//            while (it.hasNext()) {
+//                val secondStorageInfo = secondStorageInfos.get(it.nextIndex());
+//                NDataModelResponse modelResponse = (NDataModelResponse) it.next();
+//                modelResponse.setSecondStorageNodes(secondStorageInfo.getSecondStorageNodes());
+//                modelResponse.setSecondStorageSize(secondStorageInfo.getSecondStorageSize());
+//                modelResponse.setSecondStorageEnabled(secondStorageInfo.isSecondStorageEnabled());
+//            }
+//        }
+//    }
 
 }

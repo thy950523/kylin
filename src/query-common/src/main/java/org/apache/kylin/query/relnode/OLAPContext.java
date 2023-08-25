@@ -39,7 +39,7 @@ import org.apache.calcite.rex.RexInputRef;
 import org.apache.calcite.rex.RexNode;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.kylin.common.KylinConfig;
-import org.apache.kylin.common.QueryContext;
+//import org.apache.kylin.common.QueryContext;
 import org.apache.kylin.guava30.shaded.common.base.Preconditions;
 import org.apache.kylin.guava30.shaded.common.collect.Lists;
 import org.apache.kylin.guava30.shaded.common.collect.Sets;
@@ -68,7 +68,7 @@ import org.apache.kylin.storage.StorageContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.kyligence.kap.secondstorage.SecondStorageUtil;
+//import io.kyligence.kap.secondstorage.SecondStorageUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.val;
@@ -287,8 +287,8 @@ public class OLAPContext {
         val streamingRealization = new NativeQueryRealization(modelId, modelAlias,
                 ctx.storageContext.getStreamingLayoutId(), realizationType, ctx.storageContext.isPartialMatchModel(),
                 snapshots);
-        streamingRealization.setSecondStorage(QueryContext.current().getSecondStorageUsageMap()
-                .getOrDefault(streamingRealization.getLayoutId(), false));
+//        streamingRealization.setSecondStorage(QueryContext.current().getSecondStorageUsageMap()
+//                .getOrDefault(streamingRealization.getLayoutId(), false));
         streamingRealization.setStreamingLayout(true);
         return streamingRealization;
     }
@@ -297,10 +297,10 @@ public class OLAPContext {
             String modelId, String modelAlias, List<String> snapshots) {
         val realization = new NativeQueryRealization(modelId, modelAlias, ctx.storageContext.getLayoutId(),
                 realizationType, ctx.storageContext.isPartialMatchModel(), snapshots);
-        realization.setSecondStorage(
-                QueryContext.current().getSecondStorageUsageMap().getOrDefault(realization.getLayoutId(), false));
-        realization.setRecommendSecondStorage(
-                recommendSecondStorage(ctx.realization.getProject(), modelId, realizationType));
+//        realization.setSecondStorage(
+//                QueryContext.current().getSecondStorageUsageMap().getOrDefault(realization.getLayoutId(), false));
+//        realization.setRecommendSecondStorage(
+//                recommendSecondStorage(ctx.realization.getProject(), modelId, realizationType));
         return realization;
     }
 
@@ -308,10 +308,10 @@ public class OLAPContext {
         tableSets.addAll(ctx.storageContext.getCandidate().getDerivedTableSnapshots());
     }
 
-    private static boolean recommendSecondStorage(String project, String modelId, String realizationType) {
-        return QueryMetrics.TABLE_INDEX.equals(realizationType) && SecondStorageUtil.isProjectEnable(project)
-                && !SecondStorageUtil.isModelEnable(project, modelId);
-    }
+//    private static boolean recommendSecondStorage(String project, String modelId, String realizationType) {
+//        return QueryMetrics.TABLE_INDEX.equals(realizationType) && SecondStorageUtil.isProjectEnable(project)
+//                && !SecondStorageUtil.isModelEnable(project, modelId);
+//    }
 
     public static RexInputRef createUniqueInputRefAmongTables(OLAPTableScan table, int columnIdx,
             Collection<OLAPTableScan> tables) {

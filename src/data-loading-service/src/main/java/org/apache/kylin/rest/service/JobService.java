@@ -140,7 +140,7 @@ import org.apache.kylin.guava30.shaded.common.collect.Lists;
 import org.apache.kylin.guava30.shaded.common.collect.Maps;
 import org.apache.kylin.guava30.shaded.common.collect.Sets;
 
-import io.kyligence.kap.secondstorage.SecondStorageUtil;
+//import io.kyligence.kap.secondstorage.SecondStorageUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -277,15 +277,12 @@ public class JobService extends BasicService implements JobSupporter, ISmartAppl
     }
 
     public List<ExecutableResponse.SegmentResponse> getSegments(AbstractExecutable executable) {
-        if (SecondStorageUtil.isModelEnable(executable.getProject(), executable.getTargetModelId())) {
-            return modelService
-                    .getSegmentsResponseByJob(executable.getTargetModelId(), executable.getProject(), executable)
-                    .stream()
-                    .map(dataSegmentResponse -> new ExecutableResponse.SegmentResponse(dataSegmentResponse.getId(),
-                            dataSegmentResponse.getStatusToDisplay()))
-                    .collect(Collectors.toList());
-        }
-        return Lists.newArrayList();
+        return modelService
+                .getSegmentsResponseByJob(executable.getTargetModelId(), executable.getProject(), executable)
+                .stream()
+                .map(dataSegmentResponse -> new ExecutableResponse.SegmentResponse(dataSegmentResponse.getId(),
+                        dataSegmentResponse.getStatusToDisplay()))
+                .collect(Collectors.toList());
     }
 
     //---------------------------------------
@@ -452,8 +449,7 @@ public class JobService extends BasicService implements JobSupporter, ISmartAppl
         JobActionEnum.validateValue(action.toUpperCase(Locale.ROOT));
 
         AbstractExecutable job = getManager(NExecutableManager.class, project).getJob(jobId);
-        if (SecondStorageUtil.isModelEnable(project, job.getTargetModelId())
-                && job.getJobSchedulerMode().equals(JobSchedulerModeEnum.DAG)) {
+        if (job.getJobSchedulerMode().equals(JobSchedulerModeEnum.DAG)) {
             checkSegmentState(project, action, job);
         }
     }
@@ -501,14 +497,12 @@ public class JobService extends BasicService implements JobSupporter, ISmartAppl
         jobActionValidate(jobId, project, action);
         switch (JobActionEnum.valueOf(action.toUpperCase(Locale.ROOT))) {
         case RESUME:
-            SecondStorageUtil.checkJobResume(project, jobId);
             executableManager.updateJobError(jobId, null, null, null, null);
             executableManager.resumeJob(jobId);
             UnitOfWork.get().doAfterUnit(afterUnitTask);
             MetricsGroup.hostTagCounterInc(MetricsName.JOB_RESUMED, MetricsCategory.PROJECT, project);
             break;
         case RESTART:
-            SecondStorageUtil.checkJobRestart(project, jobId);
             executableManager.updateJobError(jobId, null, null, null, null);
             executableManager.addFrozenJob(jobId);
             executableManager.restartJob(jobId);
@@ -524,7 +518,6 @@ public class JobService extends BasicService implements JobSupporter, ISmartAppl
                     () -> EventBusFactory.getInstance().postAsync(new JobDiscardNotifier(project, jobType)));
             break;
         case PAUSE:
-            SecondStorageUtil.checkJobPause(project, jobId);
             executableManager.pauseJob(jobId);
             break;
         default:

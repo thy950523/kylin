@@ -20,7 +20,7 @@ package org.apache.kylin.rest.response;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
+//import java.util.Map;
 
 import org.apache.kylin.job.common.SegmentUtil;
 import org.apache.kylin.job.execution.AbstractExecutable;
@@ -33,7 +33,7 @@ import org.apache.kylin.metadata.cube.model.NDataflow;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
-import io.kyligence.kap.secondstorage.response.SecondStorageNode;
+//import io.kyligence.kap.secondstorage.response.SecondStorageNode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.val;
@@ -82,8 +82,8 @@ public class NDataSegmentResponse extends NDataSegment {
     @JsonProperty("row_count")
     private long rowCount;
 
-    @JsonProperty("second_storage_nodes")
-    private Map<String, List<SecondStorageNode>> secondStorageNodes;
+//    @JsonProperty("second_storage_nodes")
+//    private Map<String, List<SecondStorageNode>> secondStorageNodes;
 
     // byte
     @JsonProperty("second_storage_size")

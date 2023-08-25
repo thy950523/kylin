@@ -27,12 +27,12 @@ import org.apache.kylin.metadata.cube.model.NIndexPlanManager;
 import org.apache.kylin.metadata.model.NDataModel;
 import org.apache.kylin.rest.request.CreateBaseIndexRequest;
 import org.apache.kylin.rest.response.BuildBaseIndexResponse;
-import org.apache.kylin.rest.util.SpringContext;
+//import org.apache.kylin.rest.util.SpringContext;
 
 import org.apache.kylin.guava30.shaded.common.collect.Lists;
 
-import io.kyligence.kap.secondstorage.SecondStorageUpdater;
-import io.kyligence.kap.secondstorage.SecondStorageUtil;
+//import io.kyligence.kap.secondstorage.SecondStorageUpdater;
+//import io.kyligence.kap.secondstorage.SecondStorageUtil;
 import lombok.Setter;
 
 /**
@@ -123,11 +123,11 @@ public class BaseIndexUpdateHelper {
 
         long updatedBaseTableLayout = getBaseTableLayout();
 
-        if (SecondStorageUtil.isModelEnable(project, modelId)
-                && hasChange(preBaseTableLayout, updatedBaseTableLayout)) {
-            SecondStorageUpdater updater = SpringContext.getBean(SecondStorageUpdater.class);
-            updater.updateIndex(project, modelId);
-        }
+//        if (SecondStorageUtil.isModelEnable(project, modelId)
+//                && hasChange(preBaseTableLayout, updatedBaseTableLayout)) {
+//            SecondStorageUpdater updater = SpringContext.getBean(SecondStorageUpdater.class);
+//            updater.updateIndex(project, modelId);
+//        }
         return response;
     }
 

@@ -461,7 +461,7 @@ public class SecondStorageService extends BasicService implements SecondStorageU
         val dataflowManager = NDataflowManager.getInstance(config, project);
         val segIds = dataflowManager.getDataflow(model).getQueryableSegments().stream()
                 .map(NDataSegment::getId).collect(Collectors.toList());
-        return modelService.exportSegmentToSecondStorage(project, model, segIds.toArray(new String[]{}));
+        return null;
     }
 
     @Transaction(project = 0)

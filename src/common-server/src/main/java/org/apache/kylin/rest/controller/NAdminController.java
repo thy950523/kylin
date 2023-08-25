@@ -82,10 +82,10 @@ public class NAdminController extends NBasicController {
         propertyKeys.add("kylin.index.enable-operator-design");
 
         // add second storage
-        if (StringUtils.isNotEmpty(KylinConfig.getInstanceFromEnv().getSecondStorage())) {
-            propertyKeys.add("kylin.second-storage.class");
-            propertyKeys.add("kylin.second-storage.query-metric-collect");
-        }
+//        if (StringUtils.isNotEmpty(KylinConfig.getInstanceFromEnv().getSecondStorage())) {
+//            propertyKeys.add("kylin.second-storage.class");
+//            propertyKeys.add("kylin.second-storage.query-metric-collect");
+//        }
 
         if (!KylinConfig.getInstanceFromEnv().isAllowedNonAdminGenerateQueryDiagPackage()) {
             propertyKeys.add("kylin.security.allow-non-admin-generate-query-diag-package");

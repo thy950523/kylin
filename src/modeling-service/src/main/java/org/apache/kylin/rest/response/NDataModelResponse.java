@@ -57,7 +57,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import org.apache.kylin.guava30.shaded.common.collect.Lists;
 
-import io.kyligence.kap.secondstorage.response.SecondStorageNode;
+//import io.kyligence.kap.secondstorage.response.SecondStorageNode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -128,8 +128,8 @@ public class NDataModelResponse extends NDataModel {
     @JsonProperty("second_storage_size")
     private long secondStorageSize;
 
-    @JsonProperty("second_storage_nodes")
-    private Map<String, List<SecondStorageNode>> secondStorageNodes;
+//    @JsonProperty("second_storage_nodes")
+//    private Map<String, List<SecondStorageNode>> secondStorageNodes;
 
     @JsonProperty("second_storage_enabled")
     private boolean secondStorageEnabled;

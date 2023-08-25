@@ -18,7 +18,7 @@
 
 package org.apache.kylin.engine.spark.job;
 
-import io.kyligence.kap.secondstorage.SecondStorageUtil;
+//import io.kyligence.kap.secondstorage.SecondStorageUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.fs.Path;
 import org.apache.kylin.common.KylinConfig;
@@ -59,7 +59,7 @@ public class NSparkCleanupAfterMergeStep extends NSparkExecutable {
 
         for (String segmentId : segmentIds) {
             String path = dataflow.getSegmentHdfsPath(segmentId);
-            if (!SecondStorageUtil.isModelEnable(dataflow.getProject(), dataflow.getModel().getUuid())) {
+//            if (!SecondStorageUtil.isModelEnable(dataflow.getProject(), dataflow.getModel().getUuid())) {
                 if (!timeMachineEnabled) {
                     try {
                         HadoopUtil.deletePath(HadoopUtil.getCurrentConfiguration(), new Path(path));
@@ -70,10 +70,10 @@ public class NSparkCleanupAfterMergeStep extends NSparkExecutable {
                                 + " Please try workaround thru garbage clean manually.", segmentId, name, e);
                     }
                 }
-            } else {
-                logger.info("ClickHouse is enabled for the model, please delete segments {} in dataflow {} manually.", //
-                        segmentIds, name);
-            }
+//            } else {
+//                logger.info("ClickHouse is enabled for the model, please delete segments {} in dataflow {} manually.", //
+//                        segmentIds, name);
+//            }
         }
 
         return ExecuteResult.createSucceed();

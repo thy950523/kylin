@@ -29,7 +29,7 @@ import org.apache.kylin.common.KylinConfig;
 import org.apache.kylin.common.util.JsonUtil;
 import org.apache.kylin.engine.spark.job.NSparkSnapshotJob;
 import org.apache.kylin.engine.spark.job.NTableSamplingJob;
-import org.apache.kylin.job.SecondStorageCleanJobUtil;
+//import org.apache.kylin.job.SecondStorageCleanJobUtil;
 import org.apache.kylin.job.constant.JobStatusEnum;
 import org.apache.kylin.job.execution.AbstractExecutable;
 import org.apache.kylin.job.execution.ChainedExecutable;
@@ -193,8 +193,8 @@ public class ExecutableResponse implements Comparable<ExecutableResponse> {
                 executableResponse.setTargetSubject("The snapshot is deleted");
                 executableResponse.setTargetSubjectError(true);
             }
-        } else if (SecondStorageCleanJobUtil.isProjectCleanJob(abstractExecutable)) {
-            executableResponse.setTargetSubject(abstractExecutable.getProject());
+//        } else if (SecondStorageCleanJobUtil.isProjectCleanJob(abstractExecutable)) {
+//            executableResponse.setTargetSubject(abstractExecutable.getProject());
         } else {
             val dataflow = NDataflowManager
                     .getInstance(KylinConfig.getInstanceFromEnv(), abstractExecutable.getProject())

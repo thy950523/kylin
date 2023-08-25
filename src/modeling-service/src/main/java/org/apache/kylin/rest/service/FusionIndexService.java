@@ -29,7 +29,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
+//import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -79,7 +79,7 @@ import org.apache.kylin.streaming.metadata.StreamingJobMeta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import io.kyligence.kap.secondstorage.SecondStorageUtil;
+//import io.kyligence.kap.secondstorage.SecondStorageUtil;
 import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
@@ -306,7 +306,7 @@ public class FusionIndexService extends BasicService {
     @Transaction(project = 0)
     public void batchRemoveIndex(String project, String modelId, Set<Long> ids, IndexEntity.Range indexRange) {
         NDataModel modelDesc = getManager(NDataModelManager.class, project).getDataModelDesc(modelId);
-        checkSecondStorageBaseTableIndexEnabled(project, modelDesc, ids);
+//        checkSecondStorageBaseTableIndexEnabled(project, modelDesc, ids);
         checkStreamingIndexEnabled(project, modelDesc);
         if (!modelDesc.fusionModelStreamingPart()) {
             indexPlanService.removeIndexes(project, modelId, ids);
@@ -622,17 +622,17 @@ public class FusionIndexService extends BasicService {
         }
     }
 
-    private static void checkSecondStorageBaseTableIndexEnabled(String project, NDataModel model, Set<Long> ids)
-            throws KylinException {
-        IndexPlan indexPlan = NIndexPlanManager.getInstance(KylinConfig.getInstanceFromEnv(), project)
-                .getIndexPlan(model.getUuid());
-        boolean checkCannotDeleteEnabled = SecondStorageUtil.isModelEnable(project, model.getUuid())
-                && ids.stream().map(indexPlan::getLayoutEntity).filter(Objects::nonNull)
-                        .anyMatch(layout -> layout.isBase() && layout.getIndex().isTableIndex());
-        if (checkCannotDeleteEnabled) {
-            throw new KylinException(ErrorCodeServer.BASE_TABLE_INDEX_DELETE_DISABLE);
-        }
-    }
+//    private static void checkSecondStorageBaseTableIndexEnabled(String project, NDataModel model, Set<Long> ids)
+//            throws KylinException {
+//        IndexPlan indexPlan = NIndexPlanManager.getInstance(KylinConfig.getInstanceFromEnv(), project)
+//                .getIndexPlan(model.getUuid());
+//        boolean checkCannotDeleteEnabled = SecondStorageUtil.isModelEnable(project, model.getUuid())
+//                && ids.stream().map(indexPlan::getLayoutEntity).filter(Objects::nonNull)
+//                        .anyMatch(layout -> layout.isBase() && layout.getIndex().isTableIndex());
+//        if (checkCannotDeleteEnabled) {
+//            throw new KylinException(ErrorCodeServer.BASE_TABLE_INDEX_DELETE_DISABLE);
+//        }
+//    }
 
     private static boolean indexChangeEnable(String project, String modelId, IndexEntity.Range range,
             List<IndexEntity.Range> ranges) {

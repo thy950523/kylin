@@ -21,16 +21,16 @@ package org.apache.kylin.engine.spark.job;
 import org.apache.kylin.guava30.shaded.common.base.Preconditions;
 import org.apache.kylin.guava30.shaded.common.collect.Lists;
 import org.apache.kylin.guava30.shaded.common.collect.Sets;
-import io.kyligence.kap.secondstorage.SecondStorageConstants;
-import io.kyligence.kap.secondstorage.SecondStorageUtil;
-import io.kyligence.kap.secondstorage.enums.LockTypeEnum;
+//import io.kyligence.kap.secondstorage.SecondStorageConstants;
+//import io.kyligence.kap.secondstorage.SecondStorageUtil;
+//import io.kyligence.kap.secondstorage.enums.LockTypeEnum;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
+//import org.apache.commons.lang3.StringUtils;
 import org.apache.kylin.common.KylinConfig;
 import org.apache.kylin.job.execution.AbstractExecutable;
 import org.apache.kylin.job.execution.DefaultExecutableOnModel;
 import org.apache.kylin.job.execution.ExecutableParams;
-import org.apache.kylin.job.execution.JobSchedulerModeEnum;
+//import org.apache.kylin.job.execution.JobSchedulerModeEnum;
 import org.apache.kylin.job.execution.JobTypeEnum;
 import org.apache.kylin.job.factory.JobFactory;
 import org.apache.kylin.metadata.cube.model.LayoutEntity;
@@ -46,7 +46,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Collections;
+//import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -140,42 +140,42 @@ public class NSparkMergingJob extends DefaultExecutableOnModel {
         final Segments<NDataSegment> mergingSegments = df.getMergingSegments(mergedSegment);
         cleanStep.setParam(NBatchConstants.P_SEGMENT_IDS,
                 String.join(",", NSparkCubingUtil.toSegmentIds(mergingSegments)));
-        AbstractExecutable mergeStep = initSecondMergeStep(mergedSegment, layouts, df, job, config, mergingSegments);
+//        AbstractExecutable mergeStep = initSecondMergeStep(mergedSegment, layouts, df, job, config, mergingSegments);
         AbstractExecutable updateMetadata = JobStepType.UPDATE_METADATA.createStep(job, config);
 
-        if (SecondStorageUtil.isModelEnable(df.getProject(), job.getTargetSubject())) {
-            setDAGRelations(job, config, resourceDetect, merging, cleanStep, mergeStep, updateMetadata);
-        }
+//        if (SecondStorageUtil.isModelEnable(df.getProject(), job.getTargetSubject())) {
+//            setDAGRelations(job, config, resourceDetect, merging, cleanStep, mergeStep, updateMetadata);
+//        }
         return job;
     }
 
-    private static AbstractExecutable initSecondMergeStep(NDataSegment mergedSegment, Set<LayoutEntity> layouts,
-                                                          NDataflow df, NSparkMergingJob job, KylinConfig config, Segments<NDataSegment> mergingSegments) {
-        AbstractExecutable mergeStep = null;
-        if (SecondStorageUtil.isModelEnable(df.getProject(), job.getTargetSubject())
-                && layouts.stream().anyMatch(SecondStorageUtil::isBaseTableIndex)) {
-            // can't merge segment when second storage do rebalanced
-            SecondStorageUtil.validateProjectLock(df.getProject(), Collections.singletonList(LockTypeEnum.LOAD.name()));
-            mergeStep = JobStepType.SECOND_STORAGE_MERGE.createStep(job, config);
-            mergeStep.setParam(SecondStorageConstants.P_MERGED_SEGMENT_ID, mergedSegment.getId());
-            mergeStep.setParam(NBatchConstants.P_SEGMENT_IDS,
-                    String.join(",", NSparkCubingUtil.toSegmentIds(mergingSegments)));
-        }
-        return mergeStep;
-    }
+//    private static AbstractExecutable initSecondMergeStep(NDataSegment mergedSegment, Set<LayoutEntity> layouts,
+//                                                          NDataflow df, NSparkMergingJob job, KylinConfig config, Segments<NDataSegment> mergingSegments) {
+//        AbstractExecutable mergeStep = null;
+//        if (SecondStorageUtil.isModelEnable(df.getProject(), job.getTargetSubject())
+//                && layouts.stream().anyMatch(SecondStorageUtil::isBaseTableIndex)) {
+//            // can't merge segment when second storage do rebalanced
+//            SecondStorageUtil.validateProjectLock(df.getProject(), Collections.singletonList(LockTypeEnum.LOAD.name()));
+//            mergeStep = JobStepType.SECOND_STORAGE_MERGE.createStep(job, config);
+//            mergeStep.setParam(SecondStorageConstants.P_MERGED_SEGMENT_ID, mergedSegment.getId());
+//            mergeStep.setParam(NBatchConstants.P_SEGMENT_IDS,
+//                    String.join(",", NSparkCubingUtil.toSegmentIds(mergingSegments)));
+//        }
+//        return mergeStep;
+//    }
 
-    public static void setDAGRelations(AbstractExecutable job, KylinConfig config, AbstractExecutable resourceDetect,
-                                       AbstractExecutable merging, AbstractExecutable clean, AbstractExecutable secondStorageMerge,
-                                       AbstractExecutable updateMetadata) {
-        if (!StringUtils.equalsIgnoreCase(config.getJobSchedulerMode(), JobSchedulerModeEnum.CHAIN.toString())) {
-            initResourceDetectDagNode(resourceDetect, merging, secondStorageMerge);
-            merging.setNextSteps(Sets.newHashSet(clean.getId()));
-            clean.setPreviousStep(merging.getId());
-            clean.setNextSteps(Sets.newHashSet(updateMetadata.getId()));
-            updateMetadata.setPreviousStep(clean.getId());
-            job.setJobSchedulerMode(JobSchedulerModeEnum.DAG);
-        }
-    }
+//    public static void setDAGRelations(AbstractExecutable job, KylinConfig config, AbstractExecutable resourceDetect,
+//                                       AbstractExecutable merging, AbstractExecutable clean, AbstractExecutable secondStorageMerge,
+//                                       AbstractExecutable updateMetadata) {
+//        if (!StringUtils.equalsIgnoreCase(config.getJobSchedulerMode(), JobSchedulerModeEnum.CHAIN.toString())) {
+//            initResourceDetectDagNode(resourceDetect, merging, secondStorageMerge);
+//            merging.setNextSteps(Sets.newHashSet(clean.getId()));
+//            clean.setPreviousStep(merging.getId());
+//            clean.setNextSteps(Sets.newHashSet(updateMetadata.getId()));
+//            updateMetadata.setPreviousStep(clean.getId());
+//            job.setJobSchedulerMode(JobSchedulerModeEnum.DAG);
+//        }
+//    }
 
     @Override
     public Set<String> getMetadataDumpList(KylinConfig config) {
