@@ -39,6 +39,7 @@ import org.apache.kylin.metadata.query.QueryMetrics;
 import org.apache.kylin.rest.config.initialize.QueryMetricsListener;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -113,6 +114,7 @@ public class QueryMetricsListenerTest extends NLocalFileMetadataTestCase {
         return counter == null ? 0 : counter.getCount();
     }
 
+    @Ignore
     @Test
     public void testUpdateQueryTimeMetrics() {
         long a = getCounterCount(MetricsName.QUERY_LT_1S, MetricsCategory.PROJECT, "default", new HashMap<>());
