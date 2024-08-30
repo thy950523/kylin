@@ -41,8 +41,8 @@ echo "spark_pkg_file_name : "${spark_pkg_file_name}
 wget --directory-prefix=${KYLIN_HOME} https://s3.cn-north-1.amazonaws.com.cn/download-resource/kyspark/${spark_pkg_file_name} || echo "Download spark failed"
 
 mkdir -p ${KYLIN_HOME}/${spark_pkg_name}
-tar -zxf ${spark_pkg_file_name} -C ${spark_pkg_name} --strip-components 1 || { exit 1; }
-mv ${spark_pkg_name} spark
+tar -zxf ${KYLIN_HOME}/${spark_pkg_file_name} -C ${KYLIN_HOME}/${spark_pkg_name} --strip-components 1 || { exit 1; }
+mv ${KYLIN_HOME}/${spark_pkg_name} ${KYLIN_HOME}/spark
 
 # Remove unused components in Spark
 rm -rf ${KYLIN_HOME}/spark/lib/spark-examples-*
@@ -73,4 +73,19 @@ else
         wget --directory-prefix=${KYLIN_HOME} https://s3.cn-north-1.amazonaws.com.cn/download-resource/kyspark/hive_1_2_2.tar.gz  || echo "Download hive1 failed"
     fi
 fi
-tar -zxf hive_1_2_2.tar.gz -C ${KYLIN_HOME}/spark/ || { exit 1; }
+tar -zxf ${KYLIN_HOME}/hive_1_2_2.tar.gz -C ${KYLIN_HOME}/spark/ || { exit 1; }
+
+# add gluten relevant dependencies to spark
+gluten_version=$(cat ${KYLIN_HOME}/GLUTEN_VERSION)
+gluten_platform='ubuntu22.04-x86_64'
+if [ ! -f ${KYLIN_HOME}/"${KYLIN_HOME}/gluten-${gluten_version}-${gluten_platform}.tar.gz" ]
+then
+  echo "no gluten relevant dependencies found"
+  wget --directory-prefix=${KYLIN_HOME} https://repo-ofs.kyligence.com/repository/raw-tars-hosted/org/apache/gluten/${gluten_version}-${gluten_platform}/gluten-${gluten_version}-${gluten_platform}.tar.gz || echo "Download hive1 failed"
+fi
+
+tar -zxf ${KYLIN_HOME}/gluten-${gluten_version}-${gluten_platform}.tar.gz -C ${KYLIN_HOME}/spark || { exit 1; }
+find ${KYLIN_HOME}/spark/jars/ -name "protobuf-java*" -delete
+cp ${KYLIN_HOME}/spark/gluten-${gluten_version}-${gluten_platform}/libs/libch.so ${KYLIN_HOME}/spark/
+cp ${KYLIN_HOME}/spark/gluten-${gluten_version}-${gluten_platform}/jars/spark33/* ${KYLIN_HOME}/spark/jars
+rm -r gluten-${gluten_version}-${gluten_platform}.tar.gz

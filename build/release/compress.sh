@@ -97,6 +97,7 @@ echo $WITH_GLUTEN
 if [[ "${WITH_GLUTEN}" = "1" ]]; then
     mv spark/libch.so ${package_name}/server/
     cp spark/jars/gluten.jar ${package_name}/lib/ext/
+    cp -rf GLUTEN_VERSION ${package_name}/
     if [[ "$(uname)" == "Darwin" ]]; then
             sed -i '' '27a\
     export LD_PRELOAD=${KYLIN_HOME}/server/libch.so

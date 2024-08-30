@@ -25,6 +25,7 @@ source build/release/functions.sh
 rm -rf build/gluten
 
 gluten_version=$(sed -n 's:.*<gluten.version>\(.*\)</gluten.version>.*:\1:p'  pom.xml)
+echo "${gluten_version}" >  build/GLUTEN_VERSION
 # optional
 gluten_platform='ubuntu22.04-x86_64'
 if [ ! -f "build/gluten-${gluten_version}-${gluten_platform}.tar.gz" ]; then
